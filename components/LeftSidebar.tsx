@@ -9,7 +9,7 @@ const directMessages = [
 ];
 
 export default function LeftSidebar() {
-  const [channels, setChannels] = useState([]);
+  const [channels, setChannels] = useState<{ id: number; name: string }[]>([]);
 
   useEffect(() => {
     fetch('/api/channels')
