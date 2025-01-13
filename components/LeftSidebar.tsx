@@ -1,19 +1,22 @@
-import { Button } from "@/components/ui/button"
-import { PlusCircle } from 'lucide-react'
-
-const channels = [
-  { id: 1, name: 'general' },
-  { id: 2, name: 'random' },
-  { id: 3, name: 'project-a' },
-]
+import { useEffect, useState } from 'react';
+import { Button } from "@/components/ui/button";
+import { PlusCircle } from 'lucide-react';
 
 const directMessages = [
   { id: 1, name: 'Alice' },
   { id: 2, name: 'Bob' },
   { id: 3, name: 'Charlie' },
-]
+];
 
 export default function LeftSidebar() {
+  const [channels, setChannels] = useState([]);
+
+  useEffect(() => {
+    fetch('/api/channels')
+      .then(response => response.json())
+      .then(data => setChannels(data));
+  }, []);
+
   return (
     <div className="w-64 bg-gray-800 text-white p-4 flex flex-col">
       <h1 className="text-xl font-bold mb-4">Slack Clone</h1>
@@ -54,6 +57,6 @@ export default function LeftSidebar() {
         </ul>
       </div>
     </div>
-  )
+  );
 }
 
