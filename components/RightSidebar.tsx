@@ -1,12 +1,24 @@
-const users = [
-  { id: 1, name: 'Alice', status: 'online' },
-  { id: 2, name: 'Bob', status: 'offline' },
-  { id: 3, name: 'Charlie', status: 'away' },
-  { id: 4, name: 'David', status: 'online' },
-  { id: 5, name: 'Eve', status: 'online' },
-]
+import { useEffect, useState } from 'react';
 
 export default function RightSidebar() {
+  interface User {
+    id: number;
+    name: string;
+    status: 'online' | 'away' | 'offline';
+  }
+
+  const [users, setUsers] = useState<User[]>([]);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      const response = await fetch('/api/users');
+      const data = await response.json();
+      setUsers(data);
+    };
+
+    fetchUsers();
+  }, []);
+
   return (
     <div className="w-64 bg-gray-100 p-4 border-l">
       <h2 className="text-xl font-semibold mb-4">Users</h2>
@@ -22,6 +34,6 @@ export default function RightSidebar() {
         ))}
       </ul>
     </div>
-  )
+  );
 }
 
