@@ -3,6 +3,7 @@ import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { Layout } from './components/Layout/Layout';
 import Login from './pages/Login';
 import MainPage from './pages/MainPage';
+import ProfilePage from './pages/ProfilePage';
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth();
@@ -44,6 +45,14 @@ export function App() {
               element={
                 <ProtectedRoute>
                   <MainPage />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/profile/:userId?" 
+              element={
+                <ProtectedRoute>
+                  <ProfilePage />
                 </ProtectedRoute>
               } 
             />
