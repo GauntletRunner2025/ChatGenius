@@ -28,13 +28,39 @@ function TabButton({ active, onClick, children }: TabButtonProps) {
 
 export function MainContent() {
   const [activeTab, setActiveTab] = useState<Tab>('chat');
-  const { selectedChannel } = useChannelStore();
+  const { selectedChannel, isJoined, joinChannel } = useChannelStore();
+
+  const handleJoinChannel = async () => {
+    if (selectedChannel) {
+      try {
+        await joinChannel(selectedChannel.id);
+      } catch (error) {
+        console.error('Failed to join channel:', error);
+      }
+    }
+  };
 
   const renderChatContent = () => {
     if (!selectedChannel) {
       return (
         <div className="flex items-center justify-center h-full text-gray-500">
           Select a channel to start chatting
+        </div>
+      );
+    }
+
+    if (!isJoined(selectedChannel.id)) {
+      return (
+        <div className="flex flex-col items-center justify-center h-full">
+          <div className="text-gray-500 mb-4">
+            You need to join this channel to view messages
+          </div>
+          <button
+            onClick={handleJoinChannel}
+            className="px-4 py-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 transition-colors"
+          >
+            Join #{selectedChannel.slug}
+          </button>
         </div>
       );
     }

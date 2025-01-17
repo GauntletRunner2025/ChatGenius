@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useProfileStore } from '../stores/profileStore';
 import { useParams, useNavigate } from 'react-router-dom';
+import { fetchDirectMessages, sendDirectMessage } from '../supabase';
 
 export default function ProfilePage() {
   const { userId } = useParams();
@@ -11,6 +12,8 @@ export default function ProfilePage() {
   const [bio, setBio] = useState('');
   const [isSaving, setIsSaving] = useState(false);
   const [saveMessage, setSaveMessage] = useState('');
+  const [messages, setMessages] = useState<any[]>([]);
+  const [newMessage, setNewMessage] = useState('');
 
   const isOwnProfile = user?.id === (userId || user?.id);
   const targetUserId = userId || user?.id;
@@ -26,6 +29,15 @@ export default function ProfilePage() {
       setBio(profile.bio);
     }
   }, [profile]);
+
+  useEffect(() => {
+    const loadMessages = async () => {
+      const data = await fetchDirectMessages(userId!);
+      setMessages(data);
+    };
+
+    loadMessages();
+  }, [userId]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -46,6 +58,18 @@ export default function ProfilePage() {
     } finally {
       setIsSaving(false);
     }
+  };
+
+  const handleSendMessage = async () => {
+    if (newMessage.trim() === '') return;
+
+    const sender = supabase.auth.user()?.id;
+    if (!sender) return;
+
+    await sendDirectMessage(sender, userId!, newMessage);
+    setNewMessage('');
+    const data = await fetchDirectMessages(userId!);
+    setMessages(data);
   };
 
   if (!user) {
@@ -125,6 +149,24 @@ export default function ProfilePage() {
           </button>
         )}
       </form>
+
+      <div>
+        <h3>Direct Messages</h3>
+        <div>
+          {messages.map((msg) => (
+            <div key={msg.id}>
+              <strong>{msg.sender === userId ? 'You' : 'Them'}:</strong> {msg.message}
+            </div>
+          ))}
+        </div>
+        <input
+          type="text"
+          value={newMessage}
+          onChange={(e) => setNewMessage(e.target.value)}
+          placeholder="Type a message..."
+        />
+        <button onClick={handleSendMessage}>Send</button>
+      </div>
     </div>
   );
-} 
+}

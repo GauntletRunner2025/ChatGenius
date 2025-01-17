@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useMessageStore } from '../../stores/messageStore';
+import { useChannelStore } from '../../stores/channelStore';
 import { useAuth } from '../../contexts/AuthContext';
 import { format } from 'date-fns';
 import { supabase } from '../../supabase';
@@ -10,33 +11,38 @@ interface ChatMessagesProps {
 
 export function ChatMessages({ channelId }: ChatMessagesProps) {
   const { messages, loading, error, fetchMessages } = useMessageStore();
+  const { isJoined } = useChannelStore();
   const { user } = useAuth();
 
   useEffect(() => {
-    // Only fetch if we have a channel ID
-    if (channelId) {
+    // Only fetch if we have a channel ID and we've joined the channel
+    if (channelId && isJoined(channelId)) {
       fetchMessages(channelId);
+
+      // Set up real-time subscription for new messages
+      const channel = supabase
+        .channel(`messages:${channelId}`)
+        .on('postgres_changes', {
+          event: '*',
+          schema: 'public',
+          table: 'message',
+          filter: `channel_id=eq.${channelId}`
+        }, () => {
+          // When we receive any change, refresh the messages
+          fetchMessages(channelId, true);
+        })
+        .subscribe();
+
+      return () => {
+        // Clean up subscription when component unmounts or channel changes
+        supabase.removeChannel(channel);
+      };
     }
+  }, [channelId, fetchMessages, isJoined]);
 
-    // Set up real-time subscription for new messages
-    const channel = supabase
-      .channel(`messages:${channelId}`)
-      .on('postgres_changes', {
-        event: '*',
-        schema: 'public',
-        table: 'message',
-        filter: `channel_id=eq.${channelId}`
-      }, () => {
-        // When we receive any change, refresh the messages
-        fetchMessages(channelId, true);
-      })
-      .subscribe();
-
-    return () => {
-      // Clean up subscription when component unmounts or channel changes
-      supabase.removeChannel(channel);
-    };
-  }, [channelId, fetchMessages]);
+  if (!isJoined(channelId)) {
+    return null;
+  }
 
   if (loading) {
     return (

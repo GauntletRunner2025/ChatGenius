@@ -1,14 +1,25 @@
 import { useEffect, useState, FormEvent } from 'react';
 import { useChannelStore } from '../../stores/channelStore';
 import { useAuth } from '../../contexts/AuthContext';
-import { HashtagIcon } from '@heroicons/react/24/outline';
 import { ArrowRightOnRectangleIcon } from '@heroicons/react/24/outline';
 import { PlusIcon } from '@heroicons/react/24/outline';
 import { useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
 
 export default function ChannelList() {
-  const { channels, selectedChannel, loading, error, fetchChannels, selectChannel, createChannel } = useChannelStore();
+  const { 
+    channels, 
+    selectedChannel, 
+    loading, 
+    error, 
+    fetchChannels, 
+    selectChannel, 
+    createChannel,
+    joinChannel,
+    leaveChannel,
+    isJoined,
+    fetchJoinedChannels
+  } = useChannelStore();
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
   const [newChannelName, setNewChannelName] = useState('');
@@ -18,8 +29,9 @@ export default function ChannelList() {
   useEffect(() => {
     if (user) {
       fetchChannels();
+      fetchJoinedChannels();
     }
-  }, [fetchChannels, user]);
+  }, [fetchChannels, fetchJoinedChannels, user]);
 
   const handleLogout = async () => {
     try {
@@ -44,9 +56,30 @@ export default function ChannelList() {
     }
   };
 
-  const handleChannelSelect = (channel: any) => {
+  const handleChannelSelect = async (channel: any) => {
+    if (!isJoined(channel.id)) {
+      try {
+        await joinChannel(channel.id);
+      } catch (error) {
+        console.error('Failed to join channel:', error);
+        return;
+      }
+    }
     selectChannel(channel);
     navigate('/main');
+  };
+
+  const handleLeaveChannel = async (e: React.MouseEvent, channelId: number) => {
+    e.stopPropagation();
+    try {
+      await leaveChannel(channelId);
+    } catch (error) {
+      console.error('Failed to leave channel:', error);
+    }
+  };
+
+  const padChannelName = (name: string) => {
+    return name.length >= 20 ? name.slice(0, 20) : name.padEnd(20);
   };
 
   if (!user) {
@@ -70,19 +103,44 @@ export default function ChannelList() {
           </div>
         )}
         
-        {channels.map((channel) => (
-          <button
-            key={channel.id}
-            onClick={() => handleChannelSelect(channel)}
-            className={clsx(
-              'w-full flex items-center px-3 py-1.5 hover:bg-gray-700/50 transition-colors text-left',
-              selectedChannel?.id === channel.id ? 'bg-gray-700/50' : ''
-            )}
-          >
-            <HashtagIcon className="h-4 w-4 mr-2 flex-shrink-0 text-gray-400" />
-            <span className="truncate text-sm text-gray-200">{channel.slug}</span>
-          </button>
-        ))}
+        <div className="mb-2">
+          <h3 className="px-3 py-1 text-xs font-semibold text-gray-400 uppercase tracking-wider">Joined Channels</h3>
+          <div className="space-y-0.5">
+            {channels.filter(channel => isJoined(channel.id)).map((channel) => (
+              <div
+                key={channel.id}
+                onClick={() => handleChannelSelect(channel)}
+                className={clsx(
+                  'w-full flex items-center h-8 px-3 hover:bg-gray-700/50 transition-colors text-left cursor-pointer',
+                  selectedChannel?.id === channel.id ? 'bg-gray-700/50' : ''
+                )}
+              >
+                <button
+                  onClick={(e) => handleLeaveChannel(e, channel.id)}
+                  className="mr-2 text-xs text-gray-400 hover:text-red-400 transition-opacity"
+                >
+                  -
+                </button>
+                <span className="truncate text-sm text-gray-200"># {padChannelName(channel.slug)}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <h3 className="px-3 py-1 text-xs font-semibold text-gray-400 uppercase tracking-wider">Available Channels</h3>
+          <div className="space-y-0.5">
+            {channels.filter(channel => !isJoined(channel.id)).map((channel) => (
+              <div
+                key={channel.id}
+                onClick={() => handleChannelSelect(channel)}
+                className="w-full flex items-center h-8 px-3 hover:bg-gray-700/50 transition-colors text-left text-gray-400 cursor-pointer"
+              >
+                <span className="truncate text-sm"># {channel.slug.slice(0, 20)}</span>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
 
       <div className="mt-4 border-t border-gray-700/50 pt-4">

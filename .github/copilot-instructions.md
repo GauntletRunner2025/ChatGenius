@@ -26,3 +26,6 @@ When using Supabase authentication methods, ensure return types match Supabase's
 - The root route ("/") should always render the Home component
 - Ensure the Channels list is included in the Sidebar layout.
 
+- When adding new features, ensure the database schema, Supabase functions, React components, and routing are updated accordingly.
+- When adding direct messages, ensure they are displayed on the Profile page.
+
