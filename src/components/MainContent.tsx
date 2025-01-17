@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { useChannelStore } from '../stores/channelStore';
+import { ChatMessages } from './Chat/ChatMessages';
+import { MessageInput } from './Chat/MessageInput';
 
 type Tab = 'chat' | 'files' | 'search';
 
@@ -25,11 +28,31 @@ function TabButton({ active, onClick, children }: TabButtonProps) {
 
 export function MainContent() {
   const [activeTab, setActiveTab] = useState<Tab>('chat');
+  const { selectedChannel } = useChannelStore();
+
+  const renderChatContent = () => {
+    if (!selectedChannel) {
+      return (
+        <div className="flex items-center justify-center h-full text-gray-500">
+          Select a channel to start chatting
+        </div>
+      );
+    }
+
+    return (
+      <div className="flex flex-col h-full">
+        <div className="flex-1 overflow-y-auto">
+          <ChatMessages channelId={selectedChannel.id} />
+        </div>
+        <MessageInput channelId={selectedChannel.id} />
+      </div>
+    );
+  };
 
   const renderTabContent = () => {
     switch (activeTab) {
       case 'chat':
-        return <div className="p-4">Chat Content</div>;
+        return renderChatContent();
       case 'files':
         return <div className="p-4">Files Content</div>;
       case 'search':
