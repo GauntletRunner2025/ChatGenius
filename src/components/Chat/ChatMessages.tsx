@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useMessageStore } from '../../stores/messageStore';
 import { useAuth } from '../../contexts/AuthContext';
 import { format } from 'date-fns';
+import { supabase } from '../../supabase';
 
 interface ChatMessagesProps {
   channelId: number;
@@ -12,7 +13,29 @@ export function ChatMessages({ channelId }: ChatMessagesProps) {
   const { user } = useAuth();
 
   useEffect(() => {
-    fetchMessages(channelId);
+    // Only fetch if we have a channel ID
+    if (channelId) {
+      fetchMessages(channelId);
+    }
+
+    // Set up real-time subscription for new messages
+    const channel = supabase
+      .channel(`messages:${channelId}`)
+      .on('postgres_changes', {
+        event: '*',
+        schema: 'public',
+        table: 'message',
+        filter: `channel_id=eq.${channelId}`
+      }, () => {
+        // When we receive any change, refresh the messages
+        fetchMessages(channelId, true);
+      })
+      .subscribe();
+
+    return () => {
+      // Clean up subscription when component unmounts or channel changes
+      supabase.removeChannel(channel);
+    };
   }, [channelId, fetchMessages]);
 
   if (loading) {
