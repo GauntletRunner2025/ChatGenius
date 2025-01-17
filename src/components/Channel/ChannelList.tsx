@@ -4,11 +4,13 @@ import { useAuth } from '../../contexts/AuthContext';
 import { HashtagIcon } from '@heroicons/react/24/outline';
 import { ArrowRightOnRectangleIcon } from '@heroicons/react/24/outline';
 import { PlusIcon } from '@heroicons/react/24/outline';
+import { useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
 
 export default function ChannelList() {
   const { channels, selectedChannel, loading, error, fetchChannels, selectChannel, createChannel } = useChannelStore();
   const { user, signOut } = useAuth();
+  const navigate = useNavigate();
   const [newChannelName, setNewChannelName] = useState('');
   const [isCreating, setIsCreating] = useState(false);
   const [createError, setCreateError] = useState<string | null>(null);
@@ -42,6 +44,11 @@ export default function ChannelList() {
     }
   };
 
+  const handleChannelSelect = (channel: any) => {
+    selectChannel(channel);
+    navigate('/main');
+  };
+
   if (!user) {
     return null;
   }
@@ -66,7 +73,7 @@ export default function ChannelList() {
         {channels.map((channel) => (
           <button
             key={channel.id}
-            onClick={() => selectChannel(channel)}
+            onClick={() => handleChannelSelect(channel)}
             className={clsx(
               'w-full flex items-center px-3 py-1.5 hover:bg-gray-700/50 transition-colors text-left',
               selectedChannel?.id === channel.id ? 'bg-gray-700/50' : ''

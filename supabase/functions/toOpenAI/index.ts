@@ -55,8 +55,6 @@ serve(async (req) => {
         }
 
         const { id, bio } = payload.record;
-        console.log("id: ", id);
-        console.log("bio: ", bio);
 
         // Retrieve environment variables
         const openAiApiKey = Deno.env.get('OPENAI_API_KEY');
