@@ -28,4 +28,5 @@ When using Supabase authentication methods, ensure return types match Supabase's
 
 - When adding new features, ensure the database schema, Supabase functions, React components, and routing are updated accordingly.
 - When adding direct messages, ensure they are displayed on the Profile page.
+- ProfilePage.tsx: Ensure Supabase client is imported and used in the handleSendMessage function to avoid ReferenceError.
 

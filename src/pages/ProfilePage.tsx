@@ -3,6 +3,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { useProfileStore } from '../stores/profileStore';
 import { useParams, useNavigate } from 'react-router-dom';
 import { fetchDirectMessages, sendDirectMessage } from '../supabase';
+import { supabase } from '../supabase';
 
 export default function ProfilePage() {
   const { userId } = useParams();
@@ -63,7 +64,8 @@ export default function ProfilePage() {
   const handleSendMessage = async () => {
     if (newMessage.trim() === '') return;
 
-    const sender = supabase.auth.user()?.id;
+    const { data: { user } } = await supabase.auth.getUser();
+    const sender = user?.id;
     if (!sender) return;
 
     await sendDirectMessage(sender, userId!, newMessage);
