@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useAuth } from '../contexts/AuthContext';
 
@@ -10,12 +10,9 @@ export default function Login() {
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<LoginForm>();
   const { signInWithMagicLink } = useAuth();
   const [magicLinkSent, setMagicLinkSent] = useState(false);
-
   const onSubmit = async (data: LoginForm) => {
-    const { error } = await signInWithMagicLink(data.email);
-    if (!error) {
-      setMagicLinkSent(true);
-    }
+    await signInWithMagicLink(data.email);
+    setMagicLinkSent(true);
   };
 
   if (magicLinkSent) {

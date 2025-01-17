@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useMessageStore } from '../../stores/messageStore';
 import { useAuth } from '../../contexts/AuthContext';
 import { format } from 'date-fns';

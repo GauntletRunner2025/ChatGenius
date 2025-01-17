@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useChannelStore } from '../../stores/channelStore';
 import { HashtagIcon } from '@heroicons/react/24/outline';
 import clsx from 'clsx';

@@ -1,5 +1,4 @@
 import React from 'react';
-import { Header } from '../Header';
 import styles from './Layout.module.css';
 import ChannelList from '../Channel/ChannelList';
 import { UsersList } from '../UsersList';

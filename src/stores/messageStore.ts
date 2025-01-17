@@ -17,7 +17,7 @@ interface MessageStore {
   sendMessage: (channelId: number, message: string, userId: string) => Promise<void>;
 }
 
-export const useMessageStore = create<MessageStore>((set, get) => ({
+export const useMessageStore = create<MessageStore>((set) => ({
   messages: {},
   loading: false,
   error: null,
