@@ -11,6 +11,7 @@ export default function ChannelList() {
   const { user, signOut } = useAuth();
   const [newChannelName, setNewChannelName] = useState('');
   const [isCreating, setIsCreating] = useState(false);
+  const [createError, setCreateError] = useState<string | null>(null);
 
   useEffect(() => {
     if (user) {
@@ -31,10 +32,12 @@ export default function ChannelList() {
     if (!newChannelName.trim() || !user) return;
 
     try {
+      setCreateError(null);
       await createChannel(newChannelName.trim(), user.id);
       setNewChannelName('');
       setIsCreating(false);
     } catch (error) {
+      setCreateError((error as Error).message);
       console.error('Failed to create channel:', error);
     }
   };
@@ -51,28 +54,26 @@ export default function ChannelList() {
     );
   }
 
-  if (error) {
-    return (
-      <div className="px-2 py-4 text-red-400">
-        Error: {error}
-      </div>
-    );
-  }
-
   return (
     <div className="flex flex-col h-full">
-      <div className="flex-1 space-y-1">
+      <div className="flex-1">
+        {(error || createError) && (
+          <div className="px-3 py-2 mx-2 my-2 text-sm text-red-400 bg-red-900/20 rounded">
+            {error || createError}
+          </div>
+        )}
+        
         {channels.map((channel) => (
           <button
             key={channel.id}
             onClick={() => selectChannel(channel)}
             className={clsx(
-              'w-full flex items-center px-2 py-1 rounded hover:bg-gray-700/50 transition-colors',
+              'w-full flex items-center px-3 py-1.5 hover:bg-gray-700/50 transition-colors text-left',
               selectedChannel?.id === channel.id ? 'bg-gray-700/50' : ''
             )}
           >
-            <HashtagIcon className="h-4 w-4 mr-2" />
-            <span className="truncate">{channel.slug}</span>
+            <HashtagIcon className="h-4 w-4 mr-2 flex-shrink-0 text-gray-400" />
+            <span className="truncate text-sm text-gray-200">{channel.slug}</span>
           </button>
         ))}
       </div>
@@ -91,7 +92,10 @@ export default function ChannelList() {
           </form>
         ) : (
           <button
-            onClick={() => setIsCreating(true)}
+            onClick={() => {
+              setIsCreating(true);
+              setCreateError(null);
+            }}
             className="w-full flex items-center px-2 py-1 rounded hover:bg-gray-700/50 transition-colors text-gray-400 hover:text-gray-200"
           >
             <PlusIcon className="h-4 w-4 mr-2" />

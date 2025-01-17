@@ -41,6 +41,13 @@ export function MainContent() {
 
     return (
       <div className="flex flex-col h-full">
+        <div className="px-6 py-4 border-b border-gray-700/50">
+          <div className="flex items-center">
+            <h1 className="text-xl font-semibold text-gray-200">
+              <span className="text-gray-400">#</span> {selectedChannel.slug}
+            </h1>
+          </div>
+        </div>
         <div className="flex-1 overflow-y-auto">
           <ChatMessages channelId={selectedChannel.id} />
         </div>

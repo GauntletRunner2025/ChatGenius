@@ -58,7 +58,12 @@ export const useChannelStore = create<ChannelStore>((set) => ({
         .select()
         .single();
 
-      if (error) throw error;
+      if (error) {
+        if (error.code === '23505') { // Postgres unique violation code
+          throw new Error('A channel with this name already exists');
+        }
+        throw error;
+      }
 
       set((state) => ({
         channels: [...state.channels, data],
@@ -66,6 +71,7 @@ export const useChannelStore = create<ChannelStore>((set) => ({
       }));
     } catch (error) {
       set({ error: (error as Error).message });
+      throw error; // Re-throw to handle in component
     } finally {
       set({ loading: false });
     }
