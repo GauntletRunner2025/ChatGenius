@@ -1,3 +1,4 @@
+The supabase file is at src/supabase.ts
 This a react app.
 Supabase backend.
 Project goal is a slack clone with Zen-desk style features.
@@ -23,4 +24,5 @@ When using Supabase authentication methods, ensure return types match Supabase's
 - Ensure React Router is properly configured in App.tsx
 - All route components should be placed in the src/pages directory
 - The root route ("/") should always render the Home component
+- Ensure the Channels list is included in the Sidebar layout.
 
