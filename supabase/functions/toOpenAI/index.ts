@@ -1,5 +1,15 @@
 import { serve } from 'https://deno.land/std@0.177.0/http/server.ts';
 
+// Helper function for consistent response formatting
+function createResponse(body: Record<string, any>, status: number) {
+    return new Response(JSON.stringify(body), {
+        status,
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    });
+}
+
 interface ProfileRecord {
     id: string;
     bio: string;
@@ -27,31 +37,35 @@ serve(async (req) => {
 
         // We only want to process profile bio updates
         if (payload.type !== 'UPDATE' || payload.table !== 'profile' || !payload.record.bio) {
-            return new Response(JSON.stringify({ message: 'Skipping: Not a profile bio update' }), { status: 200 });
+            return createResponse({ message: 'Skipping: Not a profile bio update' }, 200);
         }
 
         const { id, bio } = payload.record;
-        //Output the id and bio
         console.log("id: ", id);
         console.log("bio: ", bio);
 
         // Retrieve environment variables
         const openAiApiKey = Deno.env.get('OPENAI_API_KEY');
         const supabaseUrl = Deno.env.get('SUPABASE_URL');
-        const supabaseKey = Deno.env.get('SUPABASE_KEY');
+        const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
 
         //Check if the environment variables are set one by one
         if (!openAiApiKey) {
             console.log("Missing openai api key.");
-            return new Response(JSON.stringify({ error: 'Missing required environment variables.' }), { status: 500 });
+            return createResponse({ error: 'Missing OpenAI API key' }, 500);
+        }
+        else{
+            //Log the length and first 10 characters of the api key
+            console.log("OpenAI API key length: ", openAiApiKey.length);
+            console.log("OpenAI API key first 10 characters: ", openAiApiKey.substring(0, 10));
         }
         if (!supabaseUrl) {
             console.log("Missing supabase url.");
-            return new Response(JSON.stringify({ error: 'Missing required environment variables.' }), { status: 500 });
+            return createResponse({ error: 'Missing Supabase URL' }, 500);
         }
         if (!supabaseKey) {
             console.log("Missing supabase key.");
-            return new Response(JSON.stringify({ error: 'Missing required environment variables.' }), { status: 500 });
+            return createResponse({ error: 'Missing Supabase key' }, 500);
         }
 
         // Generate the embedding from OpenAI API
@@ -60,25 +74,24 @@ serve(async (req) => {
             headers: {
                 'Authorization': `Bearer ${openAiApiKey}`,
                 'Content-Type': 'application/json',
-                'dimensions': '384',
             },
             body: JSON.stringify({
                 model: 'text-embedding-3-small',
                 input: bio,
+                dimensions: 384
             }),
         });
 
         if (!openAiResponse.ok) {
             const errorDetails = await openAiResponse.text();
-            return new Response(JSON.stringify({ error: 'Error from OpenAI API', details: errorDetails }), { status: 500 });
+            console.log("OpenAI API error:", errorDetails);
+            return createResponse({ error: 'Error from OpenAI API', details: errorDetails }, 500);
         }
-
-        console.log("openai response: ", openAiResponse);
 
         const { data } = await openAiResponse.json();
 
         if (!data || !data[0] || !data[0].embedding) {
-            return new Response(JSON.stringify({ error: 'Invalid response from OpenAI API.' }), { status: 500 });
+            return createResponse({ error: 'Invalid response from OpenAI API' }, 500);
         }
 
         const embedding = data[0].embedding;
@@ -100,14 +113,16 @@ serve(async (req) => {
 
         if (!supabaseResponse.ok) {
             const errorDetails = await supabaseResponse.text();
-            return new Response(JSON.stringify({ error: 'Error updating Supabase', details: errorDetails }), { status: 500 });
+            console.log("Supabase error:", errorDetails);
+            return createResponse({ error: 'Error updating Supabase', details: errorDetails }, 500);
         }
 
         // Return success response
-        return new Response(JSON.stringify({ message: 'Embedding updated successfully.' }), { status: 200 });
+        return createResponse({ message: 'Embedding updated successfully' }, 200);
     } catch (error: unknown) {
         // Handle unexpected errors
         const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
-        return new Response(JSON.stringify({ error: 'Unexpected error occurred.', details: errorMessage }), { status: 500 });
+        console.log("Unexpected error:", errorMessage);
+        return createResponse({ error: 'Unexpected error occurred', details: errorMessage }, 500);
     }
 });
