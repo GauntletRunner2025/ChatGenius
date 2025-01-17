@@ -9,12 +9,15 @@ When solving bugs, append a line to .github/copilot-instructions.md which contai
 
 When using Supabase authentication methods, ensure return types match Supabase's actual return types. For example, signOut returns Promise<{ error: AuthError | null }> not Promise<void>.
 
-DB layout is:
-    const channel = {id: 1,insertedAt: '2023-10-01T12:00:00Z',slug: 'example-channel',createdBy: 'user-uuid',};
-    const message = {  id: 1,  insertedAt: '2023-10-01T12:00:00Z',  content: 'Hello, orld!',  userId: 'user-uuid',  channelId: 1,};
-    const user = {  id: 'user-uuid',  username: 'exampleUser',  status: 'OFFLINE',};
-
-// ...existing code...
+## Database Schema Requirements
+- The public.channel table must exist with columns:
+  - id: bigint (identity, primary key)
+  - inserted_at: timestamp with time zone (default: current UTC time)
+  - slug: text (unique)
+  - created_by: uuid (references auth.users)
+- Row Level Security (RLS) must be enabled on the channel table
+- Authenticated users should have read access to all channels
+- Authenticated users should be able to create new channels
 
 ## Routing Setup
 - Ensure React Router is properly configured in App.tsx

@@ -20,7 +20,7 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
 
-function App() {
+const App: React.FC = () => {
   return (
     <Router>
       <AuthProvider>
@@ -37,6 +37,6 @@ function App() {
       </AuthProvider>
     </Router>
   );
-}
+};
 
 export default App;
