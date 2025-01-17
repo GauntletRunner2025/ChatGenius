@@ -7,10 +7,14 @@ interface User {
 }
 
 export function UsersList() {
-  // This is a placeholder. In a real app, you'd fetch users from your backend
   const { user: currentUser } = useAuth();
+
+  if (!currentUser) {
+    return null;
+  }
+
   const users: User[] = [
-    { id: '1', email: currentUser?.email || 'Unknown', online: true },
+    { id: currentUser.id, email: currentUser.email || '', online: true },
     // Add more users as needed
   ];
 
