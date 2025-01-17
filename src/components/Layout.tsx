@@ -1,8 +1,7 @@
-
 import React from 'react';
-import ChannelList from './ChannelList';
-import MainContent from './MainContent';
-import UsersList from './UsersList';
+import ChannelList from './Channel/ChannelList';
+import { MainContent } from './MainContent';
+import { UsersList } from './UsersList';
 
 const Layout: React.FC = () => {
     return (

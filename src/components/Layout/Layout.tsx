@@ -1,17 +1,25 @@
 import React from 'react';
-import { Header } from '../../components/Header';
+import { Header } from '../Header';
+import styles from './Layout.module.css';
+import ChannelList from '../Channel/ChannelList';
 
 interface LayoutProps {
   children: React.ReactNode;
 }
 
-export const Layout: React.FC<LayoutProps> = ({ children }) => {
+export function Layout({ children }: LayoutProps) {
   return (
-    <div className="h-screen">
-      <Header />
-      <main className="flex-1">
+    <div className={styles.container}>
+      <div className={styles.sidebar}>
+        <div className={styles.logo}>ChatGenius</div>
+        <nav className={styles.navigation}>
+          <ChannelList />
+        </nav>
+      </div>
+      <div className={styles.main}>
+        <Header />
         {children}
-      </main>
+      </div>
     </div>
   );
-};
+}
