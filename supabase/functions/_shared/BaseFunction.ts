@@ -73,4 +73,17 @@ export abstract class BaseFunction {
       return this.createErrorResponse(error.message);
     }
   }
+
+  public static getRequiredEnvVar(key: string): string {
+    const value = Deno.env.get(key);
+    if (!value) {
+      throw new Error(`Missing required environment variable: ${key}`);
+    }
+    return value;
+  }
+
+  public static getOptionalEnvVar(key: string, defaultValue?: string): string | undefined {
+    const value = Deno.env.get(key);
+    return value ?? defaultValue;
+  }
 } 
