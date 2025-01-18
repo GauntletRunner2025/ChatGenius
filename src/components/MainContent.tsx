@@ -11,15 +11,26 @@ interface TabButtonProps {
   children: React.ReactNode;
 }
 
+const TAB_BUTTON_ACTIVE_CLASSNAME = "px-4 py-2 font-medium rounded-t-lg bg-white text-gray-900 border-b-2 border-indigo-500";
+const TAB_BUTTON_INACTIVE_CLASSNAME = "px-4 py-2 font-medium rounded-t-lg text-gray-500 hover:text-gray-700 hover:bg-gray-100";
+const MAIN_CONTAINER_CLASSNAME = "h-full flex flex-col bg-gray-50";
+const TAB_CONTAINER_CLASSNAME = "border-b border-gray-200";
+const TAB_WRAPPER_CLASSNAME = "flex gap-2 px-4";
+const CHAT_CONTAINER_CLASSNAME = "flex flex-col h-full";
+const CHAT_HEADER_CLASSNAME = "px-6 py-4 border-b border-gray-700/50";
+const CHAT_TITLE_CLASSNAME = "text-xl font-semibold text-gray-200";
+const CHAT_TITLE_SPAN_CLASSNAME = "text-gray-400";
+const CHAT_MESSAGES_CONTAINER_CLASSNAME = "flex-1 overflow-y-auto";
+const JOIN_CHANNEL_CONTAINER_CLASSNAME = "flex flex-col items-center justify-center h-full";
+const JOIN_CHANNEL_TEXT_CLASSNAME = "text-gray-500 mb-4";
+const JOIN_CHANNEL_BUTTON_CLASSNAME = "px-4 py-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 transition-colors";
+const SELECT_CHANNEL_CONTAINER_CLASSNAME = "flex items-center justify-center h-full text-gray-500";
+
 function TabButton({ active, onClick, children }: TabButtonProps) {
   return (
     <button
       onClick={onClick}
-      className={`px-4 py-2 font-medium rounded-t-lg ${
-        active
-          ? 'bg-white text-gray-900 border-b-2 border-indigo-500'
-          : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100'
-      }`}
+      className={active ? TAB_BUTTON_ACTIVE_CLASSNAME : TAB_BUTTON_INACTIVE_CLASSNAME}
     >
       {children}
     </button>
@@ -43,7 +54,7 @@ export function MainContent() {
   const renderChatContent = () => {
     if (!selectedChannel) {
       return (
-        <div className="flex items-center justify-center h-full text-gray-500">
+        <div className={SELECT_CHANNEL_CONTAINER_CLASSNAME}>
           Select a channel to start chatting
         </div>
       );
@@ -51,13 +62,13 @@ export function MainContent() {
 
     if (!isJoined(selectedChannel.id)) {
       return (
-        <div className="flex flex-col items-center justify-center h-full">
-          <div className="text-gray-500 mb-4">
+        <div className={JOIN_CHANNEL_CONTAINER_CLASSNAME}>
+          <div className={JOIN_CHANNEL_TEXT_CLASSNAME}>
             You need to join this channel to view messages
           </div>
           <button
             onClick={handleJoinChannel}
-            className="px-4 py-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 transition-colors"
+            className={JOIN_CHANNEL_BUTTON_CLASSNAME}
           >
             Join #{selectedChannel.slug}
           </button>
@@ -66,15 +77,15 @@ export function MainContent() {
     }
 
     return (
-      <div className="flex flex-col h-full">
-        <div className="px-6 py-4 border-b border-gray-700/50">
+      <div className={CHAT_CONTAINER_CLASSNAME}>
+        <div className={CHAT_HEADER_CLASSNAME}>
           <div className="flex items-center">
-            <h1 className="text-xl font-semibold text-gray-200">
-              <span className="text-gray-400">#</span> {selectedChannel.slug}
+            <h1 className={CHAT_TITLE_CLASSNAME}>
+              <span className={CHAT_TITLE_SPAN_CLASSNAME}>#</span> {selectedChannel.slug}
             </h1>
           </div>
         </div>
-        <div className="flex-1 overflow-y-auto">
+        <div className={CHAT_MESSAGES_CONTAINER_CLASSNAME}>
           <ChatMessages channelId={selectedChannel.id} />
         </div>
         <MessageInput channelId={selectedChannel.id} />
@@ -94,9 +105,9 @@ export function MainContent() {
   };
 
   return (
-    <div className="h-full flex flex-col bg-gray-50">
-      <div className="border-b border-gray-200">
-        <div className="flex gap-2 px-4">
+    <div className={MAIN_CONTAINER_CLASSNAME}>
+      <div className={TAB_CONTAINER_CLASSNAME}>
+        <div className={TAB_WRAPPER_CLASSNAME}>
           <TabButton
             active={activeTab === 'chat'}
             onClick={() => setActiveTab('chat')}
