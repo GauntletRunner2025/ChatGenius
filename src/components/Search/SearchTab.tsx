@@ -110,24 +110,34 @@ export function SearchTab({}: SearchTabProps) {
 
   // Load cached embeddings on component mount
   useEffect(() => {
+    console.log('SearchTab component initialized');
     loadCachedEmbeddings();
   }, []);
 
+  // Monitor search term changes
+  useEffect(() => {
+    console.log('Search term updated:', searchTerm);
+  }, [searchTerm]);
+
   const loadCachedEmbeddings = async () => {
+    console.log('Loading cached embeddings...');
     const cachedData = localStorage.getItem(CACHE_KEYS.EMBEDDINGS);
     const lastUpdated = localStorage.getItem(CACHE_KEYS.LAST_UPDATED);
     
     if (cachedData && lastUpdated) {
       const parsedLastUpdated = parseInt(lastUpdated, 10);
       const isExpired = Date.now() - parsedLastUpdated > CACHE_TTL;
+      console.log('Cache status:', isExpired ? 'expired' : 'valid');
       
       if (!isExpired) {
         setCachedEmbeddings(JSON.parse(cachedData));
+        console.log('Using cached embeddings');
         return;
       }
     }
     
     // Cache is expired or doesn't exist, fetch fresh data
+    console.log('Cache miss - fetching fresh embeddings');
     await refreshEmbeddingsCache();
   };
 
@@ -238,11 +248,14 @@ export function SearchTab({}: SearchTabProps) {
     
     setIsSearching(true);
     setResults([]);
+    console.log('Starting search for:', searchTerm);
     
     try {
       // Get query embedding
+      console.log('Fetching query embedding...');
       const response = await getQueryEmbedding(searchTerm);
       const { embedding, searchId } = response;
+      console.log('Got query embedding, searchId:', searchId);
       
       // Use cached embeddings
       setProgress({ 
@@ -250,12 +263,15 @@ export function SearchTab({}: SearchTabProps) {
         total: cachedEmbeddings.length, 
         status: STRINGS.LABELS.CALCULATING 
       });
+      console.log('Searching through', cachedEmbeddings.length, 'cached embeddings');
       
       // Perform search
       const searchResults = searchEmbeddings(embedding, cachedEmbeddings);
+      console.log('Search complete, found', searchResults.length, 'results');
       setResults(searchResults);
 
       // Update search status and results
+      console.log('Updating search status in database...');
       await supabase.from('searches')
         .update({
           results: searchResults,
@@ -263,12 +279,14 @@ export function SearchTab({}: SearchTabProps) {
         })
         .eq('user_id', searchId)
         .eq('query', searchTerm);
+      console.log('Search status updated successfully');
       
     } catch (error) {
       console.error(STRINGS.ERRORS.SEARCH_ERROR, error);
     } finally {
       setIsSearching(false);
       setProgress({ current: 0, total: 0, status: '' });
+      console.log('Search operation completed');
     }
   };
 

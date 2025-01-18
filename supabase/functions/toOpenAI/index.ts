@@ -5,8 +5,11 @@ import { WebhookPayload } from '../_shared/types/Webhook.ts';
 import { EmbeddingRecord } from '../_shared/types/Embedding.ts';
 import { BaseFunction } from '../_shared/BaseFunction.ts';
 
-// Helper function for consistent response formatting
 function createResponse(body: Record<string, any>, status: number) {
+    if (status !== 200) {
+        console.error("Error:", body);
+    }
+
     return new Response(JSON.stringify(body), {
         status,
         headers: {
@@ -15,10 +18,9 @@ function createResponse(body: Record<string, any>, status: number) {
     });
 }
 
-serve(async (req) => {
+serve(async (req: Request) => {
     try {
-        const payload: WebhookPayload<ProfileRecord> = await req.json();
-        console.log("Received webhook payload:", payload);
+        const payload = (await req.json()) as WebhookPayload<ProfileRecord>;
 
         // We only want to process profile bio updates
         if (payload.type !== 'UPDATE' || payload.table !== 'profile' || !payload.record.bio) {
@@ -26,8 +28,6 @@ serve(async (req) => {
         }
 
         const { id, bio } = payload.record;
-        console.log("id: ", id);
-        console.log("bio: ", bio);
 
         try {
             // Retrieve environment variables
@@ -51,14 +51,10 @@ serve(async (req) => {
 
             if (!openAiResponse.ok) {
                 const errorDetails = await openAiResponse.text();
-                console.log("OpenAI API error:", errorDetails);
                 return createResponse({ error: 'Error from OpenAI API', details: errorDetails }, 500);
             }
 
-            console.log("OpenAI response status:", openAiResponse.status);
             const responseData = await openAiResponse.json();
-            console.log("OpenAI raw response:", responseData);
-
             const typedResponse = responseData as OpenAIEmbeddingResponse;
             
             if (!typedResponse.data?.[0]?.embedding) {
@@ -70,7 +66,6 @@ serve(async (req) => {
             }
 
             const embedding = typedResponse.data[0].embedding;
-            console.log("Embedding array length:", embedding.length);
 
             // Upsert the embedding into the embeddings table using Supabase
             const supabaseResponse = await fetch(`${supabaseUrl}/rest/v1/embeddings`, {
@@ -94,16 +89,14 @@ serve(async (req) => {
                 return createResponse({ error: 'Error updating Supabase', details: errorDetails }, 500);
             }
 
-            // Return success response
             return createResponse({ message: 'Embedding updated successfully' }, 200);
         } catch (error: unknown) {
-            // Handle unexpected errors
             const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
             console.log("Unexpected error:", errorMessage);
             return createResponse({ error: 'Unexpected error occurred', details: errorMessage }, 500);
         }
+        
     } catch (error: unknown) {
-        // Handle unexpected errors
         const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
         console.log("Unexpected error:", errorMessage);
         return createResponse({ error: 'Unexpected error occurred', details: errorMessage }, 500);
