@@ -4,12 +4,20 @@ import { corsHeaders } from './cors.ts';
 export abstract class BaseFunction {
   protected supabaseClient: SupabaseClient;
   protected user: any;
+  protected debugMode: boolean;
 
   constructor() {
     this.supabaseClient = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
     );
+    this.debugMode = Deno.env.get('DEBUG_MODE') === 'true';
+  }
+
+  protected debug(message: string): void {
+    //if (this.debugMode) {
+      console.log(`[DEBUG] ${message}`);
+    //}
   }
 
   protected async handleCors(req: Request): Promise<Response | null> {

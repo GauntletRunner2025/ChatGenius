@@ -1,6 +1,13 @@
 import { serve } from 'https://deno.land/std@0.177.0/http/server.ts';
 import { BaseFunction } from '../_shared/BaseFunction.ts';
 
+// Add Deno types
+declare const Deno: {
+  env: {
+    get(key: string): string | undefined;
+  };
+};
+
 interface OpenAIEmbeddingResponse {
   object: string;
   data: Array<{
@@ -20,6 +27,32 @@ interface RequestBody {
 }
 
 class GetEmbeddingFunction extends BaseFunction {
+  // Override serve to bypass authentication
+  public async serve(req: Request): Promise<Response> {
+    try {
+      // Handle CORS
+      const corsResponse = await this.handleCors(req);
+      if (corsResponse) return corsResponse;
+
+      // Check if this is an internal call from another edge function
+      const authHeader = req.headers.get('Authorization');
+      if (authHeader) {
+        const token = authHeader.split(' ')[1];
+        // Allow calls with service role key or anon key
+        const isInternalCall = token === Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') || 
+                             token === Deno.env.get('SUPABASE_ANON_KEY');
+        if (!isInternalCall) {
+          return this.createErrorResponse('Unauthorized', 401);
+        }
+      }
+
+      return await this.handleRequest(req);
+    } catch (error: any) {
+      console.error('Error:', error.message);
+      return this.createErrorResponse(error.message);
+    }
+  }
+
   async handleRequest(req: Request): Promise<Response> {
     const body = await req.json() as RequestBody;
 
@@ -62,26 +95,7 @@ class GetEmbeddingFunction extends BaseFunction {
     }
 
     const embedding = typedResponse.data[0].embedding;
-
-    // Store the search query and embedding
-    const { error: insertError } = await this.supabaseClient
-      .from('searches')
-      .insert({
-        user_id: this.user.id,
-        query: text,
-        query_embedding: embedding,
-        status: 'pending'  // Client will update this to 'completed' with results
-      });
-
-    if (insertError) {
-      console.log('Error inserting search:', insertError);
-      return this.createErrorResponse('Failed to store search', 500);
-    }
-
-    return this.createResponse({ 
-      embedding,
-      searchId: this.user.id
-    });
+    return this.createResponse({ embedding });
   }
 }
 
