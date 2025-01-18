@@ -18,7 +18,6 @@ interface OpenAIEmbeddingResponse {
 class GetEmbeddingFunction extends BaseFunction {
   async handleRequest(req: Request): Promise<Response> {
     const body = await req.json();
-    console.log('Request body:', body);
 
     const { text } = body;
     if (!text) {
@@ -32,8 +31,6 @@ class GetEmbeddingFunction extends BaseFunction {
       return this.createErrorResponse('OpenAI API key not configured', 500);
     }
 
-    console.log('Calling OpenAI API...');
-    // Get embedding from OpenAI
     const openAiResponse = await fetch('https://api.openai.com/v1/embeddings', {
       method: 'POST',
       headers: {
@@ -54,14 +51,7 @@ class GetEmbeddingFunction extends BaseFunction {
     }
 
     const responseData = await openAiResponse.json();
-    console.log('OpenAI response received:', {
-      status: openAiResponse.status,
-      model: responseData.model,
-      usage: responseData.usage
-    });
-
     const typedResponse = responseData as OpenAIEmbeddingResponse;
-
     if (!typedResponse.data?.[0]?.embedding) {
       console.log('Error: Invalid response structure from OpenAI');
       return this.createErrorResponse('Invalid response from OpenAI API', 500);
@@ -84,7 +74,6 @@ class GetEmbeddingFunction extends BaseFunction {
       return this.createErrorResponse('Failed to store search', 500);
     }
 
-    console.log('Successfully generated and stored embedding');
     return this.createResponse({ 
       embedding,
       searchId: this.user.id
