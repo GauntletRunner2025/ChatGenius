@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useChannelStore } from '../stores/channelStore';
 import { ChatMessages } from './Chat/ChatMessages';
 import { MessageInput } from './Chat/MessageInput';
+import { SearchTab } from './Search/SearchTab';
 
 type Tab = 'chat' | 'files' | 'search';
 
@@ -63,7 +64,7 @@ export function MainContent() {
       case 'files':
         return <div className="p-4">Files Content</div>;
       case 'search':
-        return <div className="p-4">Search Content</div>;
+        return <SearchTab />;
     }
   };
 
