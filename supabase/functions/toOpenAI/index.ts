@@ -1,4 +1,8 @@
 import { serve } from 'https://deno.land/std@0.177.0/http/server.ts';
+import { OpenAIEmbeddingResponse } from '../_shared/types/OpenAI.ts';
+import { ProfileRecord } from '../_shared/types/Profile.ts';
+import { WebhookPayload } from '../_shared/types/Webhook.ts';
+import { EmbeddingRecord } from '../_shared/types/Embedding.ts';
 
 // Helper function for consistent response formatting
 function createResponse(body: Record<string, any>, status: number) {
@@ -10,43 +14,9 @@ function createResponse(body: Record<string, any>, status: number) {
     });
 }
 
-interface OpenAIEmbeddingResponse {
-    object: string;
-    data: Array<{
-        object: string;
-        index: number;
-        embedding: number[];
-    }>;
-    model: string;
-    usage: {
-        prompt_tokens: number;
-        total_tokens: number;
-    };
-}
-
-interface ProfileRecord {
-    id: string;
-    bio: string;
-    updated_at: string;
-}
-
-interface EmbeddingRecord {
-    user_id: string;
-    embedding: number[];
-    updated_at: string;
-}
-
-interface WebhookPayload {
-    type: 'UPDATE' | 'INSERT' | 'DELETE';
-    table: string;
-    record: ProfileRecord;
-    schema: string;
-    old_record?: ProfileRecord;
-}
-
 serve(async (req) => {
     try {
-        const payload: WebhookPayload = await req.json();
+        const payload: WebhookPayload<ProfileRecord> = await req.json();
         console.log("Received webhook payload:", payload);
 
         // We only want to process profile bio updates
