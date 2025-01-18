@@ -15,9 +15,13 @@ interface OpenAIEmbeddingResponse {
   };
 }
 
+interface RequestBody {
+  text: string;
+}
+
 class GetEmbeddingFunction extends BaseFunction {
   async handleRequest(req: Request): Promise<Response> {
-    const body = await req.json();
+    const body = await req.json() as RequestBody;
 
     const { text } = body;
     if (!text) {
@@ -82,4 +86,4 @@ class GetEmbeddingFunction extends BaseFunction {
 }
 
 const handler = new GetEmbeddingFunction();
-serve((req) => handler.serve(req)); 
+serve((req: Request) => handler.serve(req)); 
