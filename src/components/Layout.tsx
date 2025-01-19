@@ -1,5 +1,4 @@
-import { React, ChannelList, UsersList } from '../imports/components/layout.imports';
-import styles from './Layout.module.css';
+import { React, ChannelList, UsersList, styles } from '../imports/components/layout.imports';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -21,6 +20,3 @@ export function Layout({ children }: LayoutProps) {
     </div>
   );
 }
-
-// Default export for flexibility in importing
-export default Layout;

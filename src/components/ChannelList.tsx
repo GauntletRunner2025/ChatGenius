@@ -7,7 +7,8 @@ import {
     PlusIcon,
     useNavigate,
     clsx,
-    type FormEvent
+    type FormEvent,
+    type MouseEvent
 } from '../imports/components/channel-list.imports';
 
 const LOADING_CHANNELS_TEXT = "Loading channels...";
@@ -100,7 +101,7 @@ export function ChannelList() {
     navigate('/main');
   };
 
-  const handleLeaveChannel = async (e: React.MouseEvent, channelId: number) => {
+  const handleLeaveChannel = async (e: MouseEvent, channelId: number) => {
     e.stopPropagation();
     try {
       await leaveChannel(channelId);
