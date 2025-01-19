@@ -1,0 +1,213 @@
+.container {
+  max-width: 42rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1.5rem;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: rgb(229 231 235);
+}
+
+.backButton {
+  padding: 0.375rem 0.75rem;
+  font-size: 0.875rem;
+  color: rgb(156 163 175);
+  border-radius: 0.375rem;
+  transition-property: color, background-color;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.backButton:hover {
+  color: rgb(229 231 235);
+  background-color: rgba(55, 65, 81, 0.5);
+}
+
+.error {
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  background-color: rgba(185, 28, 28, 0.2);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: 0.375rem;
+  color: rgb(248 113 113);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: rgb(209 213 219);
+  margin-bottom: 0.5rem;
+}
+
+.textarea {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: rgba(55, 65, 81, 0.3);
+  border: 1px solid rgb(75 85 99);
+  border-radius: 0.5rem;
+  color: rgb(229 231 235);
+}
+
+.textarea::placeholder {
+  color: rgb(156 163 175);
+}
+
+.textarea:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgb(99 102 241);
+}
+
+.bioDisplay {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: rgba(55, 65, 81, 0.3);
+  border: 1px solid rgb(75 85 99);
+  border-radius: 0.5rem;
+  color: rgb(229 231 235);
+}
+
+.saveMessage {
+  padding: 0.75rem;
+  border-radius: 0.375rem;
+}
+
+.saveMessageSuccess {
+  background-color: rgba(6, 78, 59, 0.2);
+  border: 1px solid rgba(5, 150, 105, 0.2);
+  color: rgb(52 211 153);
+}
+
+.saveMessageError {
+  background-color: rgba(185, 28, 28, 0.2);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  color: rgb(248 113 113);
+}
+
+.button {
+  padding: 0.75rem 1rem;
+  background-color: rgb(99 102 241);
+  color: white;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  transition-property: background-color;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.button:hover {
+  background-color: rgb(79 70 229);
+}
+
+.button:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgb(99 102 241), 0 0 0 4px white;
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.messagesSection {
+  margin-top: 2rem;
+}
+
+.messagesTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: rgb(229 231 235);
+  margin-bottom: 1rem;
+}
+
+.messagesList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.messageItem {
+  padding: 0.75rem;
+  background-color: rgba(55, 65, 81, 0.3);
+  border-radius: 0.5rem;
+  color: rgb(229 231 235);
+}
+
+.messageSender {
+  font-weight: 600;
+  color: rgb(156 163 175);
+  margin-right: 0.5rem;
+}
+
+.messageInput {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: rgba(55, 65, 81, 0.3);
+  border: 1px solid rgb(75 85 99);
+  border-radius: 0.5rem;
+  color: rgb(229 231 235);
+  margin-bottom: 0.75rem;
+}
+
+.messageInput::placeholder {
+  color: rgb(156 163 175);
+}
+
+.messageInput:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgb(99 102 241);
+}
+
+.sendButton {
+  padding: 0.75rem 1rem;
+  background-color: rgb(99 102 241);
+  color: white;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  transition-property: background-color;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.sendButton:hover {
+  background-color: rgb(79 70 229);
+}
+
+.sendButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.loadingContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.loadingText {
+  color: rgb(156 163 175);
+} 
