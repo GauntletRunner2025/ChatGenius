@@ -34,7 +34,7 @@ export const useChannelStore = create<ChannelStore>((set, get) => ({
     set({ loading: true, error: null });
     try {
       const { data, error } = await supabase
-        .from('channel')
+        .from('channels')
         .select('*')
         .order('inserted_at', { ascending: true });
 
@@ -76,8 +76,18 @@ export const useChannelStore = create<ChannelStore>((set, get) => ({
   createChannel: async (slug: string, userId: string) => {
     set({ loading: true, error: null });
     try {
+      const { data: existingChannel } = await supabase
+        .from('channels')
+        .select()
+        .eq('slug', slug)
+        .single();
+
+      if (existingChannel) {
+        throw new Error('A channel with this name already exists');
+      }
+
       const { data, error } = await supabase
-        .from('channel')
+        .from('channels')
         .insert([
           {
             slug: slug.toLowerCase().replace(/\s+/g, '-'),

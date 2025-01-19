@@ -194,7 +194,7 @@ export function SearchTab({}: SearchTabProps) {
   // Fetch all message embeddings from Supabase
   const fetchMessageEmbeddings = async (): Promise<MessageWithEmbedding[]> => {
     const { data, error } = await supabase
-      .from('message')
+      .from('messages')
       .select(`
         id,
         message,

@@ -1,21 +1,21 @@
 ﻿[
   {
-    "table_name": "channel",
+    "table_name": "channels",
     "column_name": "id",
     "data_type": "bigint"
   },
   {
-    "table_name": "channel",
+    "table_name": "channels",
     "column_name": "inserted_at",
     "data_type": "timestamp with time zone"
   },
   {
-    "table_name": "channel",
+    "table_name": "channels",
     "column_name": "slug",
     "data_type": "text"
   },
   {
-    "table_name": "channel",
+    "table_name": "channels",
     "column_name": "created_by",
     "data_type": "uuid"
   },
@@ -80,32 +80,32 @@
     "data_type": "timestamp with time zone"
   },
   {
-    "table_name": "message",
+    "table_name": "messages",
     "column_name": "id",
     "data_type": "bigint"
   },
   {
-    "table_name": "message",
+    "table_name": "messages",
     "column_name": "inserted_at",
     "data_type": "timestamp with time zone"
   },
   {
-    "table_name": "message",
+    "table_name": "messages",
     "column_name": "message",
     "data_type": "text"
   },
   {
-    "table_name": "message",
+    "table_name": "messages",
     "column_name": "user_id",
     "data_type": "uuid"
   },
   {
-    "table_name": "message",
+    "table_name": "messages",
     "column_name": "channel_id",
     "data_type": "bigint"
   },
   {
-    "table_name": "message",
+    "table_name": "messages",
     "column_name": "embedding",
     "data_type": "USER-DEFINED"
   },

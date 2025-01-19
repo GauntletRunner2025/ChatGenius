@@ -14,7 +14,7 @@ export function useMessageEmbeddings() {
         // Load existing embeddings
         const loadEmbeddings = async () => {
             const { data, error } = await supabase
-                .from('message')
+                .from('messages')
                 .select('id, message, embedding')
                 .order('id', { ascending: false });
 
@@ -36,13 +36,13 @@ export function useMessageEmbeddings() {
                 {
                     event: '*',
                     schema: 'public',
-                    table: 'message'
+                    table: 'messages'
                 },
                 async (payload) => {
                     if (payload.eventType === 'INSERT' || payload.eventType === 'UPDATE') {
                         // Fetch the complete message data for the new embedding
                         const { data, error } = await supabase
-                            .from('message')
+                            .from('messages')
                             .select('id, message, embedding')
                             .eq('id', payload.new.id)
                             .single();

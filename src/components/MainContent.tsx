@@ -2,10 +2,9 @@ import React, { useState } from 'react';
 import { useChannelStore } from '../stores/channelStore';
 import { ChatMessages } from './Chat/ChatMessages';
 import { MessageInput } from './Chat/MessageInput';
-import { SearchTab } from './Search/SearchTab';
 import { QueryTab } from './Query/QueryTab';
 
-type Tab = 'chat' | 'files' | 'search' | 'query';
+type Tab = 'chat' | 'files' | 'query';
 
 interface TabButtonProps {
   active: boolean;
@@ -101,8 +100,6 @@ export function MainContent() {
         return renderChatContent();
       case 'files':
         return <div className="p-4">Files Content</div>;
-      case 'search':
-        return <SearchTab />;
       case 'query':
         return <QueryTab />;
     }
@@ -123,12 +120,6 @@ export function MainContent() {
             onClick={() => setActiveTab('files')}
           >
             Files
-          </TabButton>
-          <TabButton
-            active={activeTab === 'search'}
-            onClick={() => setActiveTab('search')}
-          >
-            Search
           </TabButton>
           <TabButton
             active={activeTab === 'query'}

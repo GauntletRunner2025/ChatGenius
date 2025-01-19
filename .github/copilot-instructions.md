@@ -11,12 +11,12 @@ When solving bugs, append a line to .github/copilot-instructions.md which contai
 When using Supabase authentication methods, ensure return types match Supabase's actual return types. For example, signOut returns Promise<{ error: AuthError | null }> not Promise<void>.
 
 ## Database Schema Requirements
-- The public.channel table must exist with columns:
+- The public.channels table must exist with columns:
   - id: bigint (identity, primary key)
   - inserted_at: timestamp with time zone (default: current UTC time)
   - slug: text (unique)
   - created_by: uuid (references auth.users)
-- Row Level Security (RLS) must be enabled on the channel table
+- Row Level Security (RLS) must be enabled on the channels table
 - Authenticated users should have read access to all channels
 - Authenticated users should be able to create new channels
 

@@ -1,55 +1,58 @@
+// Follow this setup guide to integrate the Deno language server with your editor:
+// https://deno.land/manual/getting_started/setup_your_environment
+// This enables autocomplete, go to definition, etc.
+
+// Setup type definitions for built-in Supabase Runtime APIs
+import "jsr:@supabase/functions-js/edge-runtime.d.ts"
 import { serve } from "https://deno.land/std@0.177.0/http/server.ts"
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.7"
 import { WebhookPayload } from '../_shared/types/Webhook.ts'
 import { BaseFunction } from '../_shared/BaseFunction.ts'
 
-interface Message {
+console.log("Hello from Functions!")
+
+interface Messages {
   id: string
   message: string
   embedding?: number[]
 }
 
-class MessageInsertFunction extends BaseFunction {
+class MessagesInsertFunction extends BaseFunction {
+  // Override serve to bypass authentication
   public override async serve(req: Request): Promise<Response> {
-    this.debug('Starting message insert webhook handler');
-    this.debug(`Request URL: ${req.url}`);
-    this.debug(`Request method: ${req.method}`);
-    this.debug(`Request headers: ${JSON.stringify(Object.fromEntries(req.headers.entries()))}`);
-
     try {
+      // Handle CORS
       const corsResponse = await this.handleCors(req);
-      if (corsResponse) {
-        this.debug('Returning CORS response');
-        return corsResponse;
-      }
+      if (corsResponse) return corsResponse;
 
+      // Handle the actual request
       return await this.handleRequest(req);
-    } catch (error: any) {
-      this.debug(`Error in serve: ${error.message}`);
-      this.debug(`Error stack: ${error.stack}`);
+
+    } catch (error: unknown) {
       console.error('Error in function:', error);
-      return this.createErrorResponse(error.message || 'Unknown error');
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+      return this.createErrorResponse(errorMessage);
     }
   }
 
   async handleRequest(req: Request): Promise<Response> {
     this.debug('Starting handleRequest');
     
-    const payload = await req.json() as WebhookPayload<Message>
+    const payload = await req.json() as WebhookPayload<Messages>
     this.debug(`Received webhook payload type: ${payload.type}`);
     this.debug(`Received webhook table: ${payload.table}`);
     this.debug(`Received webhook schema: ${payload.schema}`);
     this.debug(`Received message: ${JSON.stringify(payload.record)}`);
     
     if (!payload.record?.message) {
-      this.debug('Message text is missing');
-      return this.createErrorResponse('Message text is required', 400)
+      this.debug('Messages text is missing');
+      return this.createErrorResponse('Messages text is required', 400)
     }
 
     // Call getEmbedding function
     const embedUrl = `${Deno.env.get('SUPABASE_URL')}/functions/v1/get-embedding`;
     this.debug(`Calling getEmbedding function at: ${embedUrl}`);
-    this.debug(`Message text to embed: ${payload.record.message}`);
+    this.debug(`Messages text to embed: ${payload.record.message}`);
 
     const embeddingResponse = await fetch(embedUrl, {
       method: 'POST',
@@ -85,14 +88,14 @@ class MessageInsertFunction extends BaseFunction {
       .single();
 
     if (error) {
-      this.debug(`Failed to update message: ${JSON.stringify(error)}`);
+      this.debug(`Failed to update messages: ${JSON.stringify(error)}`);
       return this.createErrorResponse('Failed to store embedding', 500)
     }
 
-    this.debug('Successfully updated message with embedding');
+    this.debug('Successfully updated messages with embedding');
     return this.createResponse({ success: true })
   }
 }
 
-const handler = new MessageInsertFunction()
-serve((req: Request) => handler.serve(req))
+const handler = new MessagesInsertFunction();
+serve((req: Request) => handler.serve(req));

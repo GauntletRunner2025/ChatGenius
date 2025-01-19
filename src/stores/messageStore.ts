@@ -36,7 +36,7 @@ export const useMessageStore = create<MessageStore>((set, get) => ({
     set({ loading: true, error: null });
     try {
       const { data, error } = await supabase
-        .from('message')
+        .from('messages')
         .select('*')
         .eq('channel_id', channelId)
         .order('inserted_at', { ascending: true });
@@ -59,7 +59,7 @@ export const useMessageStore = create<MessageStore>((set, get) => ({
   sendMessage: async (channelId: number, message: string, userId: string) => {
     try {
       const { data, error } = await supabase
-        .from('message')
+        .from('messages')
         .insert([
           {
             message,
