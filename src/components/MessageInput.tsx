@@ -5,8 +5,8 @@ import {
   useAuth, 
   PaperAirplaneIcon,
   type MessageInputProps 
-} from '../../imports/components/chat/input.imports';
-import styles from '../../styles/MessageInput.module.css';
+} from '../imports/components/chat/input.imports';
+import styles from '../styles/MessageInput.module.css';
 
 const PLACEHOLDER_TEXT = "Type your message...";
 

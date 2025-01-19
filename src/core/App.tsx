@@ -1,9 +1,10 @@
+import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider, useAuth } from './contexts/AuthContext';
-import { Layout } from './components/Layout/Layout';
-import Login from './pages/Login';
-import MainPage from './pages/MainPage';
-import ProfilePage from './pages/ProfilePage';
+import { AuthProvider, useAuth } from '../contexts/AuthContext';
+import Layout from '../components/Layout';
+import Login from '../pages/Login';
+import MainPage from '../pages/MainPage';
+import ProfilePage from '../pages/ProfilePage';
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth();
@@ -28,7 +29,7 @@ function RootRedirect() {
   return <Navigate to={user ? "/main" : "/login"} replace />;
 }
 
-export function App() {
+export default function App() {
   return (
     <Router>
       <AuthProvider>
@@ -63,4 +64,4 @@ export function App() {
       </AuthProvider>
     </Router>
   );
-}
+} 

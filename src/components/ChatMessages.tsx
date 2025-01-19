@@ -6,8 +6,8 @@ import {
   format, 
   supabase,
   type ChatMessagesProps 
-} from '../../imports/components/chat/messages.imports';
-import styles from '../../styles/ChatMessages.module.css';
+} from '../imports/components/chat/messages.imports';
+import styles from '../styles/ChatMessages.module.css';
 
 export function ChatMessages({ channelId }: ChatMessagesProps) {
   const { messages, loading, error, fetchMessages } = useMessageStore();

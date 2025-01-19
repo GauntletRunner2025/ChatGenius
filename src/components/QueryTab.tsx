@@ -1,9 +1,9 @@
 import { useState, KeyboardEvent, useEffect } from 'react';
-import { supabase } from '../../supabase';
-import { useAuth } from '../../hooks/useAuth';
-import { useMessageEmbeddings } from '../../hooks/useMessageEmbeddings';
-import { cosineSimilarity } from '../../utils/similarity';
-import styles from '../../styles/QueryTab.module.css';
+import { supabase } from '../supabase';
+import { useAuth } from '../hooks/useAuth';
+import { useMessageEmbeddings } from '../hooks/useMessageEmbeddings';
+import { cosineSimilarity } from '../utils/similarity';
+import styles from '../styles/QueryTab.module.css';
 
 interface SimilarMessage {
     message: string;

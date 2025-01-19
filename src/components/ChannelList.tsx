@@ -1,11 +1,11 @@
 import { useEffect, useState, FormEvent } from 'react';
-import { useChannelStore } from '../../stores/channelStore';
-import { useAuth } from '../../contexts/AuthContext';
+import { useChannelStore } from '../stores/channelStore';
+import { useAuth } from '../contexts/AuthContext';
 import { ArrowRightOnRectangleIcon } from '@heroicons/react/24/outline';
 import { PlusIcon } from '@heroicons/react/24/outline';
 import { useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
-import styles from '../../styles/ChannelList.module.css';
+import styles from '../styles/ChannelList.module.css';
 
 const LOADING_CHANNELS_TEXT = "Loading channels...";
 const JOINED_CHANNELS_TEXT = "Joined Channels";

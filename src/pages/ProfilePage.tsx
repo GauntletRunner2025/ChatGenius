@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useProfileStore } from '../stores/profileStore';
 import { useParams, useNavigate } from 'react-router-dom';
-import { fetchDirectMessages, sendDirectMessage } from '../supabase';
+import { fetchDirectMessages, sendDirectMessage } from '../services/messages';
 import { supabase } from '../supabase';
 
 export default function ProfilePage() {
