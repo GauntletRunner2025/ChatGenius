@@ -1,5 +1,4 @@
-import React from 'react';
-import { Header } from './Header';
+import { React, Header } from '../imports/components/main-layout.imports';
 
 interface MainLayoutProps {
   children: React.ReactNode;

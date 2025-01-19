@@ -1,10 +1,14 @@
-import { useEffect, useState, FormEvent } from 'react';
-import { useChannelStore } from '../stores/channelStore';
-import { useAuth } from '../contexts/AuthContext';
-import { ArrowRightOnRectangleIcon } from '@heroicons/react/24/outline';
-import { PlusIcon } from '@heroicons/react/24/outline';
-import { useNavigate } from 'react-router-dom';
-import clsx from 'clsx';
+import {
+    useEffect,
+    useState,
+    useChannelStore,
+    useAuth,
+    ArrowRightOnRectangleIcon,
+    PlusIcon,
+    useNavigate,
+    clsx,
+    type FormEvent
+} from '../imports/components/channel-list.imports';
 
 const LOADING_CHANNELS_TEXT = "Loading channels...";
 const JOINED_CHANNELS_TEXT = "Joined Channels";
@@ -33,7 +37,7 @@ const ADD_BUTTON_CLASS = "w-full flex items-center px-2 py-1 rounded hover:bg-gr
 const SIGN_OUT_BUTTON_CLASS = "w-full flex items-center px-2 py-1 mt-2 rounded hover:bg-gray-700/50 transition-colors text-gray-400 hover:text-gray-200";
 const BORDER_TOP_CLASS = "mt-4 border-t border-gray-700/50 pt-4";
 
-export default function ChannelList() {
+export function ChannelList() {
   const { 
     channels, 
     selectedChannel, 

@@ -1,7 +1,5 @@
-import React from 'react';
+import { React, ChannelList, UsersList } from '../imports/components/layout.imports';
 import styles from './Layout.module.css';
-import ChannelList from './ChannelList';
-import { UsersList } from './UsersList';
 
 interface LayoutProps {
   children: React.ReactNode;
