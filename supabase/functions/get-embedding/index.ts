@@ -28,7 +28,7 @@ interface RequestBody {
 
 class GetEmbeddingFunction extends BaseFunction {
   // Override serve to bypass authentication
-  public async serve(req: Request): Promise<Response> {
+  public override async serve(req: Request): Promise<Response> {
     try {
       // Handle CORS
       const corsResponse = await this.handleCors(req);
@@ -47,9 +47,10 @@ class GetEmbeddingFunction extends BaseFunction {
       }
 
       return await this.handleRequest(req);
-    } catch (error: any) {
-      console.error('Error:', error.message);
-      return this.createErrorResponse(error.message);
+    } catch (error: Error | unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+      console.error('Error:', errorMessage);
+      return this.createErrorResponse(errorMessage);
     }
   }
 
