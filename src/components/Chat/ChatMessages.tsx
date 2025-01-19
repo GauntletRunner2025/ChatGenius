@@ -1,8 +1,19 @@
 import { useEffect } from 'react';
 import { useMessageStore } from '../../stores/messageStore';
+import { useChannelStore } from '../../stores/channelStore';
 import { useAuth } from '../../contexts/AuthContext';
 import { format } from 'date-fns';
 import { supabase } from '../../supabase';
+
+const loadingClass = "flex items-center justify-center p-4 text-gray-500";
+const errorClass = "flex items-center justify-center p-4 text-red-500";
+const noMessagesClass = "flex items-center justify-center p-4 text-gray-500";
+const messageContainerClass = "space-y-4 p-4";
+const messageClass = "max-w-[70%] rounded-lg p-3";
+const messageHeaderClass = "flex items-center space-x-2 mb-1";
+const messageUserClass = "text-sm font-medium";
+const messageTimeClass = "text-xs opacity-75";
+const messageTextClass = "text-sm";
 
 interface ChatMessagesProps {
   channelId: number;
@@ -10,37 +21,42 @@ interface ChatMessagesProps {
 
 export function ChatMessages({ channelId }: ChatMessagesProps) {
   const { messages, loading, error, fetchMessages } = useMessageStore();
+  const { isJoined } = useChannelStore();
   const { user } = useAuth();
 
   useEffect(() => {
-    // Only fetch if we have a channel ID
-    if (channelId) {
+    // Only fetch if we have a channel ID and we've joined the channel
+    if (channelId && isJoined(channelId)) {
       fetchMessages(channelId);
+
+      // Set up real-time subscription for new messages
+      const channel = supabase
+        .channel(`messages:${channelId}`)
+        .on('postgres_changes', {
+          event: '*',
+          schema: 'public',
+          table: 'message',
+          filter: `channel_id=eq.${channelId}`
+        }, () => {
+          // When we receive any change, refresh the messages
+          fetchMessages(channelId, true);
+        })
+        .subscribe();
+
+      return () => {
+        // Clean up subscription when component unmounts or channel changes
+        supabase.removeChannel(channel);
+      };
     }
+  }, [channelId, fetchMessages, isJoined]);
 
-    // Set up real-time subscription for new messages
-    const channel = supabase
-      .channel(`messages:${channelId}`)
-      .on('postgres_changes', {
-        event: '*',
-        schema: 'public',
-        table: 'message',
-        filter: `channel_id=eq.${channelId}`
-      }, () => {
-        // When we receive any change, refresh the messages
-        fetchMessages(channelId, true);
-      })
-      .subscribe();
-
-    return () => {
-      // Clean up subscription when component unmounts or channel changes
-      supabase.removeChannel(channel);
-    };
-  }, [channelId, fetchMessages]);
+  if (!isJoined(channelId)) {
+    return null;
+  }
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center p-4 text-gray-500">
+      <div className={loadingClass}>
         Loading messages...
       </div>
     );
@@ -48,7 +64,7 @@ export function ChatMessages({ channelId }: ChatMessagesProps) {
 
   if (error) {
     return (
-      <div className="flex items-center justify-center p-4 text-red-500">
+      <div className={errorClass}>
         Error loading messages: {error}
       </div>
     );
@@ -58,38 +74,38 @@ export function ChatMessages({ channelId }: ChatMessagesProps) {
 
   if (channelMessages.length === 0) {
     return (
-      <div className="flex items-center justify-center p-4 text-gray-500">
+      <div className={noMessagesClass}>
         No messages yet. Be the first to send one!
       </div>
     );
   }
 
   return (
-    <div className="space-y-4 p-4">
+    <div className={messageContainerClass}>
       {channelMessages.map((message) => (
         <div
           key={message.id}
           className={`flex ${message.user_id === user?.id ? 'justify-end' : 'justify-start'}`}
         >
           <div
-            className={`max-w-[70%] rounded-lg p-3 ${
+            className={`${messageClass} ${
               message.user_id === user?.id
                 ? 'bg-indigo-500 text-white'
                 : 'bg-gray-100 text-gray-900'
             }`}
           >
-            <div className="flex items-center space-x-2 mb-1">
-              <span className="text-sm font-medium">
+            <div className={messageHeaderClass}>
+              <span className={messageUserClass}>
                 {message.user_id === user?.id ? 'You' : 'User'}
               </span>
-              <span className="text-xs opacity-75">
+              <span className={messageTimeClass}>
                 {format(new Date(message.inserted_at), 'MMM d, h:mm a')}
               </span>
             </div>
-            <p className="text-sm">{message.message}</p>
+            <p className={messageTextClass}>{message.message}</p>
           </div>
         </div>
       ))}
     </div>
   );
-} 
+}

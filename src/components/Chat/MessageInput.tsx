@@ -7,6 +7,12 @@ interface MessageInputProps {
   channelId: number;
 }
 
+const PLACEHOLDER_TEXT = "Type your message...";
+const INPUT_CLASSNAME = "flex-1 rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500";
+const BUTTON_CLASSNAME = "inline-flex items-center justify-center rounded-lg bg-indigo-500 p-2 text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50";
+const FORM_CLASSNAME = "p-4 border-t";
+const DIV_CLASSNAME = "flex items-center space-x-2";
+
 export function MessageInput({ channelId }: MessageInputProps) {
   const [message, setMessage] = useState('');
   const { sendMessage } = useMessageStore();
@@ -25,23 +31,23 @@ export function MessageInput({ channelId }: MessageInputProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="p-4 border-t">
-      <div className="flex items-center space-x-2">
+    <form onSubmit={handleSubmit} className={FORM_CLASSNAME}>
+      <div className={DIV_CLASSNAME}>
         <input
           type="text"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          placeholder="Type your message..."
-          className="flex-1 rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          placeholder={PLACEHOLDER_TEXT}
+          className={INPUT_CLASSNAME}
         />
         <button
           type="submit"
           disabled={!message.trim()}
-          className="inline-flex items-center justify-center rounded-lg bg-indigo-500 p-2 text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50"
+          className={BUTTON_CLASSNAME}
         >
           <PaperAirplaneIcon className="h-5 w-5" />
         </button>
       </div>
     </form>
   );
-} 
+}
