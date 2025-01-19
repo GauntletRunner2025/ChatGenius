@@ -23,3 +23,6 @@ export function Layout({ children }: LayoutProps) {
     </div>
   );
 }
+
+// Default export for flexibility in importing
+export default Layout;
