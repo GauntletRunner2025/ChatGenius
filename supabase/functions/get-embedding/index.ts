@@ -68,9 +68,6 @@ class GetEmbeddingFunction extends BaseFunction {
       return this.createErrorResponse('OpenAI API key not configured', 500);
     }
 
-    //log the openai api key
-    console.log('OpenAI API key:', openAiApiKey);
-
     const openAiResponse = await fetch('https://api.openai.com/v1/embeddings', {
       method: 'POST',
       headers: {
