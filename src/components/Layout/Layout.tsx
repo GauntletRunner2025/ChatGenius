@@ -1,6 +1,6 @@
 import React from 'react';
-import styles from './Layout.module.css';
-import ChannelList from '../Channel/ChannelList';
+import styles from '../Layout.module.css';
+import ChannelList from '../ChannelList';
 import { UsersList } from '../UsersList';
 
 interface LayoutProps {

@@ -1,6 +1,6 @@
 import { useEffect, useState, FormEvent } from 'react';
-import { useChannelStore } from '../../stores/channelStore';
-import { useAuth } from '../../contexts/AuthContext';
+import { useChannelStore } from '../stores/channelStore';
+import { useAuth } from '../contexts/AuthContext';
 import { ArrowRightOnRectangleIcon } from '@heroicons/react/24/outline';
 import { PlusIcon } from '@heroicons/react/24/outline';
 import { useNavigate } from 'react-router-dom';

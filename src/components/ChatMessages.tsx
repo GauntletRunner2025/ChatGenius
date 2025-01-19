@@ -6,7 +6,7 @@ import {
   format, 
   supabase,
   type ChatMessagesProps 
-} from '../../imports/components/chat/messages.imports';
+} from '../imports/components/chat/messages.imports';
 
 const loadingClass = "flex items-center justify-center p-4 text-gray-500";
 const errorClass = "flex items-center justify-center p-4 text-red-500";
