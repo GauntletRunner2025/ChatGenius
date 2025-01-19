@@ -1,5 +1,4 @@
 import { serve } from "https://deno.land/std@0.177.0/http/server.ts"
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.7"
 import { WebhookPayload } from '../_shared/types/Webhook.ts'
 import { BaseFunction } from '../_shared/BaseFunction.ts'
 
@@ -24,11 +23,12 @@ class MessageInsertFunction extends BaseFunction {
       }
 
       return await this.handleRequest(req);
-    } catch (error: any) {
-      this.debug(`Error in serve: ${error.message}`);
-      this.debug(`Error stack: ${error.stack}`);
+    } catch (error: unknown) {
+      const err = error as Error;
+      this.debug(`Error in serve: ${err.message}`);
+      this.debug(`Error stack: ${err.stack}`);
       console.error('Error in function:', error);
-      return this.createErrorResponse(error.message || 'Unknown error');
+      return this.createErrorResponse(err.message || 'Unknown error');
     }
   }
 
