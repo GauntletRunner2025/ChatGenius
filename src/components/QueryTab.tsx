@@ -3,6 +3,7 @@ import { supabase } from '../supabase';
 import { useAuth } from '../hooks/useAuth';
 import { useMessageEmbeddings } from '../hooks/useMessageEmbeddings';
 import { cosineSimilarity } from '../utils/similarity';
+import styles from './QueryTab.module.css';
 
 interface SimilarMessage {
     message: string;
@@ -88,24 +89,24 @@ export function QueryTab() {
     };
 
     return (
-        <div className="p-4 space-y-4">
+        <div className={styles.container}>
             <input
                 type="text"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 onKeyDown={handleKeyDown}
                 placeholder="Enter your query..."
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                className={styles.input}
             />
             
             {similarMessages.length > 0 && (
-                <div className="space-y-2">
-                    <h3 className="font-medium text-gray-700">Similar Messages:</h3>
-                    <div className="space-y-2">
+                <div className={styles.resultsContainer}>
+                    <h3 className={styles.resultsTitle}>Similar Messages:</h3>
+                    <div>
                         {similarMessages.map((sim, index) => (
-                            <div key={index} className="p-3 bg-white rounded-lg border border-gray-200">
-                                <div className="text-gray-800">{sim.message}</div>
-                                <div className="text-sm text-gray-500">
+                            <div key={index} className={styles.resultCard}>
+                                <div className={styles.resultMessage}>{sim.message}</div>
+                                <div className={styles.resultSimilarity}>
                                     Similarity: {(sim.similarity * 100).toFixed(1)}%
                                 </div>
                             </div>
