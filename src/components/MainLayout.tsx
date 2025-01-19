@@ -1,4 +1,5 @@
 import { React, Header } from '../imports/components/main-layout.imports';
+import styles from './MainLayout.module.css';
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -6,9 +7,9 @@ interface MainLayoutProps {
 
 export default function MainLayout({ children }: MainLayoutProps) {
   return (
-    <div className="h-screen">
+    <div className={styles.container}>
       <Header />
-      <main className="flex-1">
+      <main className={styles.main}>
         {children}
       </main>
     </div>
