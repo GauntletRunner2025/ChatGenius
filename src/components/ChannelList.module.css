@@ -1,0 +1,149 @@
+.loading {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  color: rgb(156 163 175);
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.flex1 {
+  flex: 1 1 0%;
+}
+
+.error {
+  padding: 0.5rem 0.75rem;
+  margin: 0.5rem;
+  font-size: 0.875rem;
+  color: rgb(248 113 113);
+  background-color: rgb(127 29 29 / 0.2);
+  border-radius: 0.25rem;
+}
+
+.sectionTitle {
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: rgb(156 163 175);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.channelItem {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  height: 2rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.channelItem:hover {
+  background-color: rgb(55 65 81 / 0.5);
+}
+
+.selectedChannel {
+  background-color: rgb(55 65 81 / 0.5);
+}
+
+.leaveButton {
+  margin-right: 0.5rem;
+  font-size: 0.75rem;
+  color: rgb(156 163 175);
+  transition-property: opacity;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.leaveButton:hover {
+  color: rgb(248 113 113);
+}
+
+.channelName {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.875rem;
+  color: rgb(229 231 235);
+}
+
+.availableChannelItem {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  height: 2rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  text-align: left;
+  color: rgb(156 163 175);
+  cursor: pointer;
+}
+
+.availableChannelItem:hover {
+  background-color: rgb(55 65 81 / 0.5);
+}
+
+.form {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.input {
+  width: 100%;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+  background-color: rgb(55 65 81 / 0.3);
+  border: 1px solid rgb(75 85 99);
+  border-radius: 0.25rem;
+  color: rgb(229 231 235);
+}
+
+.input:focus {
+  outline: none;
+  --tw-ring-color: rgb(99 102 241);
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+}
+
+.addButton {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  color: rgb(156 163 175);
+}
+
+.addButton:hover {
+  background-color: rgb(55 65 81 / 0.5);
+  color: rgb(229 231 235);
+}
+
+.signOutButton {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0.25rem 0.5rem;
+  margin-top: 0.5rem;
+  border-radius: 0.25rem;
+  color: rgb(156 163 175);
+}
+
+.signOutButton:hover {
+  background-color: rgb(55 65 81 / 0.5);
+  color: rgb(229 231 235);
+}
+
+.borderTop {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgb(55 65 81 / 0.5);
+} 
