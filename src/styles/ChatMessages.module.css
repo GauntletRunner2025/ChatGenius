@@ -1,0 +1,35 @@
+.loading {
+  @apply flex items-center justify-center p-4 text-gray-500;
+}
+
+.error {
+  @apply flex items-center justify-center p-4 text-red-500;
+}
+
+.noMessages {
+  @apply flex items-center justify-center p-4 text-gray-500;
+}
+
+.messageContainer {
+  @apply space-y-4 p-4;
+}
+
+.message {
+  @apply max-w-[70%] rounded-lg p-3;
+}
+
+.messageHeader {
+  @apply flex items-center space-x-2 mb-1;
+}
+
+.messageUser {
+  @apply text-sm font-medium;
+}
+
+.messageTime {
+  @apply text-xs opacity-75;
+}
+
+.messageText {
+  @apply text-sm;
+} 

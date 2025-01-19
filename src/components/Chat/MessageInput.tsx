@@ -6,12 +6,9 @@ import {
   PaperAirplaneIcon,
   type MessageInputProps 
 } from '../../imports/components/chat/input.imports';
+import styles from '../../styles/MessageInput.module.css';
 
 const PLACEHOLDER_TEXT = "Type your message...";
-const INPUT_CLASSNAME = "flex-1 rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500";
-const BUTTON_CLASSNAME = "inline-flex items-center justify-center rounded-lg bg-indigo-500 p-2 text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50";
-const FORM_CLASSNAME = "p-4 border-t";
-const DIV_CLASSNAME = "flex items-center space-x-2";
 
 export function MessageInput({ channelId }: MessageInputProps) {
   const [message, setMessage] = useState('');
@@ -31,19 +28,19 @@ export function MessageInput({ channelId }: MessageInputProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className={FORM_CLASSNAME}>
-      <div className={DIV_CLASSNAME}>
+    <form onSubmit={handleSubmit} className={styles.form}>
+      <div className={styles.container}>
         <input
           type="text"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           placeholder={PLACEHOLDER_TEXT}
-          className={INPUT_CLASSNAME}
+          className={styles.input}
         />
         <button
           type="submit"
           disabled={!message.trim()}
-          className={BUTTON_CLASSNAME}
+          className={styles.button}
         >
           <PaperAirplaneIcon className="h-5 w-5" />
         </button>

@@ -1,0 +1,31 @@
+.container {
+  @apply p-4 space-y-4;
+}
+
+.input {
+  @apply w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent;
+}
+
+.resultsContainer {
+  @apply space-y-2;
+}
+
+.resultsTitle {
+  @apply font-medium text-gray-700;
+}
+
+.resultsList {
+  @apply space-y-2;
+}
+
+.resultCard {
+  @apply p-3 bg-white rounded-lg border border-gray-200;
+}
+
+.resultMessage {
+  @apply text-gray-800;
+}
+
+.resultSimilarity {
+  @apply text-sm text-gray-500;
+} 

@@ -7,16 +7,7 @@ import {
   supabase,
   type ChatMessagesProps 
 } from '../../imports/components/chat/messages.imports';
-
-const loadingClass = "flex items-center justify-center p-4 text-gray-500";
-const errorClass = "flex items-center justify-center p-4 text-red-500";
-const noMessagesClass = "flex items-center justify-center p-4 text-gray-500";
-const messageContainerClass = "space-y-4 p-4";
-const messageClass = "max-w-[70%] rounded-lg p-3";
-const messageHeaderClass = "flex items-center space-x-2 mb-1";
-const messageUserClass = "text-sm font-medium";
-const messageTimeClass = "text-xs opacity-75";
-const messageTextClass = "text-sm";
+import styles from '../../styles/ChatMessages.module.css';
 
 export function ChatMessages({ channelId }: ChatMessagesProps) {
   const { messages, loading, error, fetchMessages } = useMessageStore();
@@ -55,7 +46,7 @@ export function ChatMessages({ channelId }: ChatMessagesProps) {
 
   if (loading) {
     return (
-      <div className={loadingClass}>
+      <div className={styles.loading}>
         Loading messages...
       </div>
     );
@@ -63,7 +54,7 @@ export function ChatMessages({ channelId }: ChatMessagesProps) {
 
   if (error) {
     return (
-      <div className={errorClass}>
+      <div className={styles.error}>
         Error loading messages: {error}
       </div>
     );
@@ -73,35 +64,35 @@ export function ChatMessages({ channelId }: ChatMessagesProps) {
 
   if (channelMessages.length === 0) {
     return (
-      <div className={noMessagesClass}>
+      <div className={styles.noMessages}>
         No messages yet. Be the first to send one!
       </div>
     );
   }
 
   return (
-    <div className={messageContainerClass}>
+    <div className={styles.messageContainer}>
       {channelMessages.map((message) => (
         <div
           key={message.id}
           className={`flex ${message.user_id === user?.id ? 'justify-end' : 'justify-start'}`}
         >
           <div
-            className={`${messageClass} ${
+            className={`${styles.message} ${
               message.user_id === user?.id
                 ? 'bg-indigo-500 text-white'
                 : 'bg-gray-100 text-gray-900'
             }`}
           >
-            <div className={messageHeaderClass}>
-              <span className={messageUserClass}>
+            <div className={styles.messageHeader}>
+              <span className={styles.messageUser}>
                 {message.user_id === user?.id ? 'You' : 'User'}
               </span>
-              <span className={messageTimeClass}>
+              <span className={styles.messageTime}>
                 {format(new Date(message.inserted_at), 'MMM d, h:mm a')}
               </span>
             </div>
-            <p className={messageTextClass}>{message.message}</p>
+            <p className={styles.messageText}>{message.message}</p>
           </div>
         </div>
       ))}
