@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { fetchDirectMessages, sendDirectMessage } from '../supabase';
+import { fetchDirectMessages, sendDirectMessage, supabase } from '../supabase';
 import { useParams } from 'react-router-dom';
 
 const DirectMessages: React.FC = () => {
@@ -19,7 +19,8 @@ const DirectMessages: React.FC = () => {
   const handleSendMessage = async () => {
     if (newMessage.trim() === '') return;
 
-    const sender = supabase.auth.user()?.id;
+    const { data: { user } } = await supabase.auth.getUser();
+    const sender = user?.id;
     if (!sender) return;
 
     await sendDirectMessage(sender, userId!, newMessage);
