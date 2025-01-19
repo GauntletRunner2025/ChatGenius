@@ -1,5 +1,7 @@
 This a react app.
 Supabase backend.
+The database structure and table names are in database_structure.json
+
 Project goal is a slack clone with Zen-desk style features.
 You have the power and information to create new files. If you can imagine the path, you're probably right, so believe in yourself and go ahead and create the file.
 Since this is a TypeScript project, should use tsx and replace jsx
