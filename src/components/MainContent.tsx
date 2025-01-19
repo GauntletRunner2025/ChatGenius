@@ -1,16 +1,13 @@
-import React, { useState } from 'react';
-import { useChannelStore } from '../stores/channelStore';
-import { ChatMessages } from './Chat/ChatMessages';
-import { MessageInput } from './Chat/MessageInput';
-import { QueryTab } from './Query/QueryTab';
-
-type Tab = 'chat' | 'files' | 'query';
-
-interface TabButtonProps {
-  active: boolean;
-  onClick: () => void;
-  children: React.ReactNode;
-}
+import { 
+  React, 
+  useState, 
+  useChannelStore, 
+  ChatMessages, 
+  MessageInput, 
+  QueryTab,
+  type Tab,
+  type TabButtonProps 
+} from '../imports/components/main-content.imports';
 
 const TAB_BUTTON_ACTIVE_CLASSNAME = "px-4 py-2 font-medium rounded-t-lg bg-white text-gray-900 border-b-2 border-indigo-500";
 const TAB_BUTTON_INACTIVE_CLASSNAME = "px-4 py-2 font-medium rounded-t-lg text-gray-500 hover:text-gray-700 hover:bg-gray-100";

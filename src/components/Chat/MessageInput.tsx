@@ -1,11 +1,11 @@
-import { useState, FormEvent } from 'react';
-import { useMessageStore } from '../../stores/messageStore';
-import { useAuth } from '../../contexts/AuthContext';
-import { PaperAirplaneIcon } from '@heroicons/react/24/solid';
-
-interface MessageInputProps {
-  channelId: number;
-}
+import { 
+  useState, 
+  type FormEvent, 
+  useMessageStore, 
+  useAuth, 
+  PaperAirplaneIcon,
+  type MessageInputProps 
+} from '../../imports/components/chat/input.imports';
 
 const PLACEHOLDER_TEXT = "Type your message...";
 const INPUT_CLASSNAME = "flex-1 rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500";

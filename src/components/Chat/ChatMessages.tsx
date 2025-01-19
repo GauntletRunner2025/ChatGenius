@@ -1,9 +1,12 @@
-import { useEffect } from 'react';
-import { useMessageStore } from '../../stores/messageStore';
-import { useChannelStore } from '../../stores/channelStore';
-import { useAuth } from '../../contexts/AuthContext';
-import { format } from 'date-fns';
-import { supabase } from '../../supabase';
+import { 
+  useEffect, 
+  useMessageStore, 
+  useChannelStore, 
+  useAuth, 
+  format, 
+  supabase,
+  type ChatMessagesProps 
+} from '../../imports/components/chat/messages.imports';
 
 const loadingClass = "flex items-center justify-center p-4 text-gray-500";
 const errorClass = "flex items-center justify-center p-4 text-red-500";
@@ -14,10 +17,6 @@ const messageHeaderClass = "flex items-center space-x-2 mb-1";
 const messageUserClass = "text-sm font-medium";
 const messageTimeClass = "text-xs opacity-75";
 const messageTextClass = "text-sm";
-
-interface ChatMessagesProps {
-  channelId: number;
-}
 
 export function ChatMessages({ channelId }: ChatMessagesProps) {
   const { messages, loading, error, fetchMessages } = useMessageStore();

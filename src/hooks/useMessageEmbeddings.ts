@@ -1,11 +1,4 @@
-import { useEffect, useState } from 'react';
-import { supabase } from '../supabase';
-
-interface Message {
-    id: number;
-    message: string;
-    embedding: number[];
-}
+import { Message, useEffect, useState, supabase } from '../imports/hooks/message-embeddings.imports';
 
 export function useMessageEmbeddings() {
     const [messageEmbeddings, setMessageEmbeddings] = useState<Message[]>([]);
