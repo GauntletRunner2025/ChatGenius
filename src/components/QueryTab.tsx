@@ -1,4 +1,4 @@
-import React, { useState, KeyboardEvent, useEffect } from 'react';
+import { useState, KeyboardEvent, useEffect } from 'react';
 import { supabase } from '../supabase';
 import { useAuth } from '../hooks/useAuth';
 import { useMessageEmbeddings } from '../hooks/useMessageEmbeddings';
