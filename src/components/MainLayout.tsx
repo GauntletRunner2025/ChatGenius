@@ -1,5 +1,5 @@
 import { React, Header } from '../imports/components/main-layout.imports';
-import styles from './MainLayout.module.css';
+import styles from '../styles/modules/MainLayout.module.css';
 
 interface MainLayoutProps {
   children: React.ReactNode;

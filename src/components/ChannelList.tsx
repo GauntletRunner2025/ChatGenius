@@ -1,4 +1,5 @@
 import {
+    React,
     useEffect,
     useState,
     useChannelStore,
@@ -10,7 +11,7 @@ import {
     type FormEvent,
     type MouseEvent
 } from '../imports/components/channel-list.imports';
-import styles from './ChannelList.module.css';
+import styles from '../styles/modules/ChannelList.module.css';
 
 const LOADING_CHANNELS_TEXT = "Loading channels...";
 const JOINED_CHANNELS_TEXT = "Joined Channels";

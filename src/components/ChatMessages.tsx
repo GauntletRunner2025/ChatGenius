@@ -1,4 +1,5 @@
 import { 
+  React,
   useEffect, 
   useMessageStore, 
   useChannelStore, 
@@ -7,7 +8,7 @@ import {
   supabase,
   type ChatMessagesProps 
 } from '../imports/components/chat/messages.imports';
-import styles from './ChatMessages.module.css';
+import styles from '../styles/modules/ChatMessages.module.css';
 
 export function ChatMessages({ channelId }: ChatMessagesProps) {
   const { messages, loading, error, fetchMessages } = useMessageStore();

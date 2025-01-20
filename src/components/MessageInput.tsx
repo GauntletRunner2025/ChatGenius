@@ -1,4 +1,5 @@
 import { 
+  React,
   useState, 
   type FormEvent, 
   useMessageStore, 
@@ -6,7 +7,7 @@ import {
   PaperAirplaneIcon,
   type MessageInputProps 
 } from '../imports/components/chat/input.imports';
-import styles from './MessageInput.module.css';
+import styles from '../styles/modules/MessageInput.module.css';
 
 const PLACEHOLDER_TEXT = "Type your message...";
 

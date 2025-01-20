@@ -1,10 +1,17 @@
-import { useState, FormEvent } from 'react';
+import React, { useState, type FormEvent } from 'react';
 import { useMessageStore } from '../../../stores/messageStore';
 import { useAuth } from '../../../contexts/AuthContext';
 import { PaperAirplaneIcon } from '@heroicons/react/24/solid';
 
-export interface MessageInputProps {
-    channelId: number;
-}
+export type MessageInputProps = {
+  channelId: number;
+};
 
-export { useState, type FormEvent, useMessageStore, useAuth, PaperAirplaneIcon }; 
+export {
+  React,
+  useState,
+  type FormEvent,
+  useMessageStore,
+  useAuth,
+  PaperAirplaneIcon,
+}; 

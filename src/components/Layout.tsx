@@ -1,5 +1,5 @@
 import { React, ChannelList, UsersList } from '../imports/components/layout.imports';
-import styles from './Layout.module.css';
+import styles from '../styles/modules/Layout.module.css';
 
 interface LayoutProps {
   children: React.ReactNode;

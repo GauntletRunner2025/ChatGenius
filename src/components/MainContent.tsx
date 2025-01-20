@@ -1,4 +1,5 @@
 import { 
+  React,
   useState, 
   useChannelStore, 
   ChatMessages, 
@@ -7,7 +8,7 @@ import {
   type Tab,
   type TabButtonProps 
 } from '../imports/components/main-content.imports';
-import styles from './MainContent.module.css';
+import styles from '../styles/modules/MainContent.module.css';
 
 function TabButton({ active, onClick, children }: TabButtonProps) {
   return (

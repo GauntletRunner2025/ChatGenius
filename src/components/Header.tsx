@@ -1,5 +1,6 @@
-import { Link, useAuth, UserCircleIcon } from '../imports/components/header.imports';
-import styles from './Header.module.css';
+import { React, Link, UserCircleIcon } from '../imports/components/header.imports';
+import { useAuth } from '../contexts/AuthContext';
+import styles from '../styles/modules/Header.module.css';
 
 export const Header = () => {
   const { user } = useAuth();
