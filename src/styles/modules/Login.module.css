@@ -1,8 +1,6 @@
+/* Using flex-center from base */
 .container {
   min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   background-color: rgb(249 250 251);
   padding: 3rem 1rem;
 }
@@ -42,11 +40,11 @@
   color: rgb(17 24 39);
 }
 
+/* Using text-gray from base */
 .subtitle {
   margin-top: 0.5rem;
   font-size: 0.875rem;
   line-height: 1.25rem;
-  color: rgb(75 85 99);
 }
 
 .form {
@@ -69,31 +67,15 @@
   border-width: 0;
 }
 
+/* Using input-base from base */
 .input {
   appearance: none;
   position: relative;
   display: block;
-  width: 100%;
-  padding: 0.5rem 0.75rem;
-  border: 1px solid rgb(209 213 219);
-  border-radius: 0.375rem;
-  color: rgb(17 24 39);
-  font-size: 0.875rem;
-  line-height: 1.25rem;
 }
 
 .input::placeholder {
   color: rgb(107 114 128);
-}
-
-.input:focus {
-  outline: none;
-  z-index: 10;
-  border-color: rgb(99 102 241);
-  --tw-ring-color: rgb(99 102 241);
-  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
-  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
-  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
 }
 
 .error {
@@ -103,23 +85,16 @@
   color: rgb(220 38 38);
 }
 
+/* Using btn-base and btn-primary from base */
 .button {
   position: relative;
   width: 100%;
   display: flex;
   justify-content: center;
-  padding: 0.5rem 1rem;
   border: 1px solid transparent;
   font-size: 0.875rem;
   line-height: 1.25rem;
   font-weight: 500;
-  border-radius: 0.375rem;
-  color: white;
-  background-color: rgb(79 70 229);
-}
-
-.button:hover {
-  background-color: rgb(67 56 202);
 }
 
 .button:focus {
@@ -151,7 +126,7 @@
   color: rgb(17 24 39);
 }
 
+/* Using text-gray from base */
 .successMessage {
   margin-top: 0.5rem;
-  color: rgb(75 85 99);
 } 

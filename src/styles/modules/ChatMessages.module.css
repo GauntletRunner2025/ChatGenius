@@ -1,25 +1,19 @@
+/* Using flex-center from base */
 .loading {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   padding: 1rem;
-  color: rgb(107 114 128);
+  /* Using text-gray from base */
 }
 
+/* Using flex-center from base */
 .error {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   padding: 1rem;
   color: rgb(239 68 68);
 }
 
+/* Using flex-center from base */
 .noMessages {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   padding: 1rem;
-  color: rgb(107 114 128);
+  /* Using text-gray from base */
 }
 
 .messageContainer {
@@ -36,9 +30,8 @@
   padding: 0.75rem;
 }
 
+/* Using flex-center from base */
 .messageHeader {
-  display: flex;
-  align-items: center;
   margin-bottom: 0.25rem;
 }
 

@@ -1,6 +1,6 @@
 .header {
   background-color: rgb(17 24 39);
-  border-bottom: 1px solid rgba(55, 65, 81, 0.5);
+  /* Using border-bottom from base */
 }
 
 .container {
@@ -30,14 +30,14 @@
 .title {
   font-size: 1.5rem;
   font-weight: 700;
-  color: rgb(229 231 235);
+  /* Using text-light from base */
 }
 
+/* Using text-gray from base */
 .link {
   display: flex;
   align-items: center;
   padding: 0.5rem 0.75rem;
-  color: rgb(156 163 175);
   border-radius: 0.5rem;
   transition-property: color, background-color;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -45,7 +45,7 @@
 }
 
 .link:hover {
-  color: rgb(229 231 235);
+  /* Using text-light from base */
   background-color: rgba(55, 65, 81, 0.5);
 }
 

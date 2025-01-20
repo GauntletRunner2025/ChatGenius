@@ -4,35 +4,33 @@
   background-color: rgb(17 24 39);
 }
 
+/* Using flex-container from base */
 .channels {
   width: 16rem;
   flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
   background-color: rgb(31 41 55);
-  border-right: 1px solid rgba(55, 65, 81, 0.5);
+  /* Using border-right from base */
 }
 
 .logo {
   padding: 1rem;
   font-size: 1.25rem;
   font-weight: 600;
-  color: rgb(229 231 235);
-  border-bottom: 1px solid rgba(55, 65, 81, 0.5);
+  /* Using text-light from base */
+  /* Using border-bottom from base */
 }
 
+/* Using flex-container from base */
 .main {
   flex: 1;
   min-width: 0;
-  display: flex;
-  flex-direction: column;
 }
 
 .users {
   width: 16rem;
   flex-shrink: 0;
   background-color: rgb(31 41 55);
-  border-left: 1px solid rgba(55, 65, 81, 0.5);
+  /* Using border-left from base */
 }
 
 @media (max-width: 1024px) {

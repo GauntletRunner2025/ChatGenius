@@ -1,13 +1,11 @@
+/* Using flex-container from base */
 .container {
   height: 100vh;
-  display: flex;
-  flex-direction: column;
   background-color: rgb(17 24 39);
 }
 
+/* Using flex-container from base */
 .main {
   flex: 1;
-  display: flex;
-  flex-direction: column;
   min-height: 0;
 } 
