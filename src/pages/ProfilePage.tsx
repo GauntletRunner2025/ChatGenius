@@ -4,7 +4,7 @@ import { useProfileStore } from '../stores/profileStore';
 import { useParams, useNavigate } from 'react-router-dom';
 import { fetchDirectMessages, sendDirectMessage } from '../supabase';
 import { supabase } from '../supabase';
-import styles from './ProfilePage.module.css';
+import styles from '../styles/modules/ProfilePage.module.css';
 
 interface Message {
   id: string;

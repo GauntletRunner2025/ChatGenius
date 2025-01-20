@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useAuth } from '../contexts/AuthContext';
-import styles from './Login.module.css';
+import styles from '../styles/modules/Login.module.css';
 
 interface LoginForm {
   email: string;

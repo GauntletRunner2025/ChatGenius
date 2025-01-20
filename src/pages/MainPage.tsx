@@ -1,6 +1,6 @@
 import React from 'react';
 import { MainContent } from '../components/MainContent';
-import styles from './MainPage.module.css';
+import styles from '../styles/modules/MainPage.module.css';
 
 const MainPage: React.FC = () => {
   return (

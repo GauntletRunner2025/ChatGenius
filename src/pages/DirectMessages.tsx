@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { fetchDirectMessages, sendDirectMessage, supabase } from '../supabase';
 import { useParams } from 'react-router-dom';
-import styles from './DirectMessages.module.css';
+import styles from '../styles/modules/DirectMessages.module.css';
 
 interface Message {
   id: string;
