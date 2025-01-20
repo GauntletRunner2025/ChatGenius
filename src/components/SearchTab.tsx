@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { supabase } from '../../supabase';
+import React, { useState, useEffect } from 'react';
+import { supabase } from '../supabase';
 
 // String constants
 const STRINGS = {

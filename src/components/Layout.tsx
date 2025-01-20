@@ -1,16 +1,23 @@
-import React from 'react';
-import ChannelList from './Channel/ChannelList';
-import { MainContent } from './MainContent';
-import { UsersList } from './UsersList';
+import { React, ChannelList, UsersList } from '../imports/components/layout.imports';
+import styles from '../styles/modules/Layout.module.css';
 
-const Layout: React.FC = () => {
-    return (
-        <div className="layout">
-            <ChannelList />
-            <MainContent />
-            <UsersList />
-        </div>
-    );
-};
+interface LayoutProps {
+  children: React.ReactNode;
+}
 
-export default Layout;
+export function Layout({ children }: LayoutProps) {
+  return (
+    <div className={styles.container}>
+      <div className={styles.channels}>
+        <div className={styles.logo}>ChatGenius</div>
+        <ChannelList />
+      </div>
+      <main className={styles.main}>
+        {children}
+      </main>
+      <div className={styles.users}>
+        <UsersList />
+      </div>
+    </div>
+  );
+}

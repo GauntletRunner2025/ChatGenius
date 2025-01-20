@@ -1,0 +1,41 @@
+.container {
+  padding: 1rem;
+}
+
+.container > * + * {
+  margin-top: 1rem;
+}
+
+/* Using input-base from base */
+.input {
+}
+
+.resultsContainer {
+  margin-top: 0.5rem;
+}
+
+.resultsContainer > * + * {
+  margin-top: 0.5rem;
+}
+
+.resultsTitle {
+  font-weight: 500;
+  color: rgb(55 65 81);
+}
+
+.resultCard {
+  padding: 0.75rem;
+  background-color: white;
+  border-radius: 0.5rem;
+  border: 1px solid rgb(229 231 235);
+}
+
+.resultMessage {
+  color: rgb(31 41 55);
+}
+
+/* Using text-gray from base */
+.resultSimilarity {
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+} 

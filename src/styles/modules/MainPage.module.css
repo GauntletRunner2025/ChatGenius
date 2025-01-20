@@ -1,0 +1,5 @@
+/* Using flex-container from base */
+.container {
+  width: 100%;
+  background-color: rgb(249 250 251);
+} 

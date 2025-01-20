@@ -4,6 +4,13 @@ import { useProfileStore } from '../stores/profileStore';
 import { useParams, useNavigate } from 'react-router-dom';
 import { fetchDirectMessages, sendDirectMessage } from '../supabase';
 import { supabase } from '../supabase';
+import styles from '../styles/modules/ProfilePage.module.css';
+
+interface Message {
+  id: string;
+  sender: string;
+  message: string;
+}
 
 export default function ProfilePage() {
   const { userId } = useParams();
@@ -13,7 +20,7 @@ export default function ProfilePage() {
   const [bio, setBio] = useState('');
   const [isSaving, setIsSaving] = useState(false);
   const [saveMessage, setSaveMessage] = useState('');
-  const [messages, setMessages] = useState<any[]>([]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState('');
 
   const isOwnProfile = user?.id === (userId || user?.id);
@@ -76,43 +83,43 @@ export default function ProfilePage() {
 
   if (!user) {
     return (
-      <div className="flex items-center justify-center h-full">
-        <p className="text-gray-400">Please log in to view profiles.</p>
+      <div className={styles.loadingContainer}>
+        <p className={styles.loadingText}>Please log in to view profiles.</p>
       </div>
     );
   }
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-full">
-        <p className="text-gray-400">Loading profile...</p>
+      <div className={styles.loadingContainer}>
+        <p className={styles.loadingText}>Loading profile...</p>
       </div>
     );
   }
 
   return (
-    <div className="max-w-2xl mx-auto p-6">
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-semibold text-gray-200">
+    <div className={styles.container}>
+      <div className={styles.header}>
+        <h1 className={styles.title}>
           {isOwnProfile ? 'Your Profile' : 'User Profile'}
         </h1>
         <button
           onClick={() => navigate('/main')}
-          className="px-3 py-1.5 text-sm text-gray-400 hover:text-gray-200 hover:bg-gray-700/50 rounded transition-colors"
+          className={styles.backButton}
         >
           Back to Chat
         </button>
       </div>
       
       {error && (
-        <div className="mb-4 p-3 bg-red-900/20 border border-red-500/20 rounded text-red-400">
+        <div className={styles.error}>
           {error}
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label htmlFor="bio" className="block text-sm font-medium text-gray-300 mb-2">
+      <form onSubmit={handleSubmit} className={styles.form}>
+        <div className={styles.formGroup}>
+          <label htmlFor="bio" className={styles.label}>
             Bio
           </label>
           {isOwnProfile ? (
@@ -122,20 +129,20 @@ export default function ProfilePage() {
               onChange={(e) => setBio(e.target.value)}
               placeholder="Tell us about yourself..."
               rows={4}
-              className="w-full px-3 py-2 bg-gray-700/30 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-200 placeholder-gray-400"
+              className={styles.textarea}
             />
           ) : (
-            <div className="w-full px-3 py-2 bg-gray-700/30 border border-gray-600 rounded-lg text-gray-200">
+            <div className={styles.bioDisplay}>
               {profile?.bio || 'This user hasn\'t written a bio yet.'}
             </div>
           )}
         </div>
 
         {saveMessage && (
-          <div className={`p-3 rounded ${
+          <div className={`${styles.saveMessage} ${
             saveMessage.includes('success')
-              ? 'bg-green-900/20 border border-green-500/20 text-green-400'
-              : 'bg-red-900/20 border border-red-500/20 text-red-400'
+              ? styles.saveMessageSuccess
+              : styles.saveMessageError
           }`}>
             {saveMessage}
           </div>
@@ -145,19 +152,22 @@ export default function ProfilePage() {
           <button
             type="submit"
             disabled={isSaving}
-            className="px-4 py-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50 transition-colors"
+            className={styles.button}
           >
             {isSaving ? 'Saving...' : 'Save Profile'}
           </button>
         )}
       </form>
 
-      <div>
-        <h3>Direct Messages</h3>
-        <div>
+      <div className={styles.messagesSection}>
+        <h3 className={styles.messagesTitle}>Direct Messages</h3>
+        <div className={styles.messagesList}>
           {messages.map((msg) => (
-            <div key={msg.id}>
-              <strong>{msg.sender === userId ? 'You' : 'Them'}:</strong> {msg.message}
+            <div key={msg.id} className={styles.messageItem}>
+              <span className={styles.messageSender}>
+                {msg.sender === userId ? 'You' : 'Them'}:
+              </span>
+              {msg.message}
             </div>
           ))}
         </div>
@@ -166,8 +176,15 @@ export default function ProfilePage() {
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
           placeholder="Type a message..."
+          className={styles.messageInput}
         />
-        <button onClick={handleSendMessage}>Send</button>
+        <button 
+          onClick={handleSendMessage}
+          disabled={!newMessage.trim()}
+          className={styles.sendButton}
+        >
+          Send
+        </button>
       </div>
     </div>
   );

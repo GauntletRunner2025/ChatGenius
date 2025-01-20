@@ -1,0 +1,132 @@
+/* Using flex-center from base */
+.container {
+  min-height: 100vh;
+  background-color: rgb(249 250 251);
+  padding: 3rem 1rem;
+}
+
+@media (min-width: 640px) {
+  .container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+.formContainer {
+  max-width: 28rem;
+  width: 100%;
+}
+
+.formContainer > * + * {
+  margin-top: 2rem;
+}
+
+.header {
+  text-align: center;
+}
+
+.title {
+  margin-top: 1.5rem;
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+  font-weight: 800;
+  color: rgb(17 24 39);
+}
+
+/* Using text-gray from base */
+.subtitle {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.form {
+  margin-top: 2rem;
+}
+
+.form > * + * {
+  margin-top: 1.5rem;
+}
+
+.inputLabel {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Using input-base from base */
+.input {
+  appearance: none;
+  position: relative;
+  display: block;
+}
+
+.input::placeholder {
+  color: rgb(107 114 128);
+}
+
+.error {
+  margin-top: 0.25rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: rgb(220 38 38);
+}
+
+/* Using btn-base and btn-primary from base */
+.button {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  border: 1px solid transparent;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+}
+
+.button:focus {
+  outline: none;
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 2px var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + 2px) rgb(99 102 241);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.successContainer {
+  max-width: 28rem;
+  width: 100%;
+  text-align: center;
+}
+
+.successContainer > * + * {
+  margin-top: 2rem;
+}
+
+.successTitle {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+  font-weight: 800;
+  color: rgb(17 24 39);
+}
+
+/* Using text-gray from base */
+.successMessage {
+  margin-top: 0.5rem;
+} 

@@ -1,0 +1,50 @@
+.container {
+  display: flex;
+  height: 100vh;
+  background-color: rgb(17 24 39);
+}
+
+/* Using flex-container from base */
+.channels {
+  width: 16rem;
+  flex-shrink: 0;
+  background-color: rgb(31 41 55);
+  /* Using border-right from base */
+}
+
+.logo {
+  padding: 1rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  /* Using text-light from base */
+  /* Using border-bottom from base */
+}
+
+/* Using flex-container from base */
+.main {
+  flex: 1;
+  min-width: 0;
+}
+
+.users {
+  width: 16rem;
+  flex-shrink: 0;
+  background-color: rgb(31 41 55);
+  /* Using border-left from base */
+}
+
+@media (max-width: 1024px) {
+  .container {
+    grid-template-columns: 200px 1fr 200px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    grid-template-columns: 1fr;
+  }
+  
+  .channels, .users {
+    display: none;
+  }
+}

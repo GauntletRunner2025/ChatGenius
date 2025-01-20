@@ -1,0 +1,11 @@
+/* Using flex-container from base */
+.container {
+  height: 100vh;
+  background-color: rgb(17 24 39);
+}
+
+/* Using flex-container from base */
+.main {
+  flex: 1;
+  min-height: 0;
+} 

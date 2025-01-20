@@ -1,0 +1,76 @@
+/* Using flex-center from base */
+.loading {
+  padding: 1rem;
+  /* Using text-gray from base */
+}
+
+/* Using flex-center from base */
+.error {
+  padding: 1rem;
+  color: rgb(239 68 68);
+}
+
+/* Using flex-center from base */
+.noMessages {
+  padding: 1rem;
+  /* Using text-gray from base */
+}
+
+.messageContainer {
+  padding: 1rem;
+}
+
+.messageContainer > * + * {
+  margin-top: 1rem;
+}
+
+.message {
+  max-width: 70%;
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+}
+
+/* Using flex-center from base */
+.messageHeader {
+  margin-bottom: 0.25rem;
+}
+
+.messageHeader > * + * {
+  margin-left: 0.5rem;
+}
+
+.messageUser {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.messageTime {
+  font-size: 0.75rem;
+  opacity: 0.75;
+}
+
+.messageText {
+  font-size: 0.875rem;
+}
+
+.ownMessage {
+  background-color: rgb(99 102 241);
+  color: white;
+}
+
+.otherMessage {
+  background-color: rgb(243 244 246);
+  color: rgb(17 24 39);
+}
+
+.messageWrapper {
+  display: flex;
+}
+
+.ownMessageWrapper {
+  justify-content: flex-end;
+}
+
+.otherMessageWrapper {
+  justify-content: flex-start;
+} 

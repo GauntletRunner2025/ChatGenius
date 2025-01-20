@@ -1,0 +1,79 @@
+.mainContainer {
+  background-color: rgb(249 250 251);
+}
+
+.tabContainer {
+  /* Using border-bottom from base */
+}
+
+.tabWrapper {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0 1rem;
+}
+
+.tabButtonActive {
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+  background-color: white;
+  color: rgb(17 24 39);
+  border-bottom: 2px solid rgb(99 102 241);
+}
+
+/* Using text-gray from base */
+.tabButtonInactive {
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+}
+
+.tabButtonInactive:hover {
+  color: rgb(55 65 81);
+  background-color: rgb(243 244 246);
+}
+
+/* Using flex-container from base */
+.chatContainer {
+}
+
+.chatHeader {
+  padding: 1rem 1.5rem;
+  /* Using border-bottom from base */
+}
+
+.chatTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  /* Using text-light from base */
+}
+
+/* Using text-gray from base */
+.chatTitleSpan {
+}
+
+.chatMessagesContainer {
+  flex: 1;
+  overflow-y: auto;
+}
+
+/* Using flex-center from base */
+.joinChannelContainer {
+  height: 100%;
+}
+
+/* Using text-gray from base */
+.joinChannelText {
+  margin-bottom: 1rem;
+}
+
+/* Using btn-base and btn-primary from base */
+.joinChannelButton {
+}
+
+/* Using flex-center and text-gray from base */
+.selectChannelContainer {
+  height: 100%;
+} 
