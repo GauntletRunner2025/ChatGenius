@@ -106,14 +106,14 @@ export function ChannelList() {
 
   if (loading) {
     return (
-      <div className={styles.loading}>
+      <div className={`${styles.loading} text-gray`}>
         {LOADING_CHANNELS_TEXT}
       </div>
     );
   }
 
   return (
-    <div className={styles.container}>
+    <div className={`flex-container ${styles.container}`}>
       <div className={styles.flex1}>
         {(error || createError) && (
           <div className={styles.error}>
@@ -122,7 +122,7 @@ export function ChannelList() {
         )}
         
         <div className="mb-2">
-          <h3 className={styles.sectionTitle}>{JOINED_CHANNELS_TEXT}</h3>
+          <h3 className={`${styles.sectionTitle} text-gray`}>{JOINED_CHANNELS_TEXT}</h3>
           <div className="space-y-0.5">
             {channels.filter(channel => isJoined(channel.id)).map((channel) => (
               <div
@@ -135,24 +135,24 @@ export function ChannelList() {
               >
                 <button
                   onClick={(e) => handleLeaveChannel(e, channel.id)}
-                  className={styles.leaveButton}
+                  className={`${styles.leaveButton} text-gray`}
                 >
                   -
                 </button>
-                <span className={styles.channelName}># {padChannelName(channel.slug)}</span>
+                <span className={`${styles.channelName} text-ellipsis text-light`}># {padChannelName(channel.slug)}</span>
               </div>
             ))}
           </div>
         </div>
 
         <div>
-          <h3 className={styles.sectionTitle}>{AVAILABLE_CHANNELS_TEXT}</h3>
+          <h3 className={`${styles.sectionTitle} text-gray`}>{AVAILABLE_CHANNELS_TEXT}</h3>
           <div className="space-y-0.5">
             {channels.filter(channel => !isJoined(channel.id)).map((channel) => (
               <div
                 key={channel.id}
                 onClick={() => handleChannelSelect(channel)}
-                className={styles.availableChannelItem}
+                className={`${styles.availableChannelItem} text-gray`}
               >
                 <span className="truncate text-sm"># {channel.slug.slice(0, 20)}</span>
               </div>
@@ -161,7 +161,7 @@ export function ChannelList() {
         </div>
       </div>
 
-      <div className={styles.borderTop}>
+      <div className={`${styles.borderTop} border-top`}>
         {isCreating ? (
           <form onSubmit={handleCreateChannel} className={styles.form}>
             <input
@@ -169,7 +169,7 @@ export function ChannelList() {
               value={newChannelName}
               onChange={(e) => setNewChannelName(e.target.value)}
               placeholder={ENTER_CHANNEL_NAME_PLACEHOLDER}
-              className={styles.input}
+              className={`input-base ${styles.input}`}
               autoFocus
             />
           </form>
@@ -179,7 +179,7 @@ export function ChannelList() {
               setIsCreating(true);
               setCreateError(null);
             }}
-            className={styles.addButton}
+            className={`${styles.addButton} text-gray hover:text-light`}
           >
             <PlusIcon className="h-4 w-4 mr-2" />
             <span>{ADD_CHANNEL_TEXT}</span>
@@ -188,7 +188,7 @@ export function ChannelList() {
 
         <button
           onClick={handleLogout}
-          className={styles.signOutButton}
+          className={`${styles.signOutButton} text-gray hover:text-light`}
         >
           <ArrowRightOnRectangleIcon className="h-4 w-4 mr-2" />
           <span>{SIGN_OUT_TEXT}</span>
